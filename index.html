@@ -868,7 +868,6 @@ body.dark .historyCardV45.mainBillV52.water{
 
   .ownerAvatar{width:52px;height:52px;border-radius:18px;font-size:18px}
   .ownerMiniGrid{grid-template-columns:1fr}
-}
 
 
 /* v5.8 Compact native-app header */
@@ -1223,7 +1222,7 @@ body.dark .billCurrencyV92 .billCurrencyMarkV92{
   <button class="nav" data-page="units" onclick="nav('units')"><span class="svgIcon" data-icon="units"></span><span class="navTextV6">Units</span></button>
   <button class="nav" data-page="reports" onclick="nav('reports')"><span class="svgIcon" data-icon="chart"></span><span class="navTextV6">Insights</span></button>
 </nav>
-<div id="shade" class="shade" onclick="closeSheet()"></div><section id="sheet" class="sheet"><div class="grab"></div><div id="sheetContent"></div></section><div id="toast" class="toast"></div><input id="importer" type="file" accept="application/json" hidden>
+<div id="shade" class="shade" onclick="closeSheet()"></div><section id="sheet" class="sheet"><div class="grab"></div><div id="sheetContent"></div></section><div id="toast" class="toast"></div><input id="importer" type="file" accept="application/json" aria-label="Import UtilityHub backup" hidden>
 <script>
 const KEY='utilityhub_clean_v1',IDB_NAME='utilityhub_localdb',IDB_STORE='appdata',IDB_META_STORE='metadata',IDB_VERSION=2;let db=null,current='dashboard',filter='all',searchText='',storageMode='Loading',lastSavedAt='',saveTimer=null;
 function lsGet(k){try{return window.localStorage.getItem(k)}catch(e){return null}}function lsSet(k,v){try{window.localStorage.setItem(k,v)}catch(e){}}
@@ -2080,17 +2079,9 @@ function renderHistory(){
     sheet.addEventListener('touchcancel',resetSheetDrag,{passive:true});
   }
 
-  // Add nav badges for operational counts without altering navigation behavior.
+  // Keep operational counts on the dashboard, not on the compact navigation dock.
   window.updateNavBadgesV50=function(){
-    try{
-      const unpaid=(db?.readings||[]).filter(r=>r.status!=='paid').length;
-      const due=typeof missingReadingCount==='function'?missingReadingCount(typeof monthNow==='function'?monthNow():new Date().toISOString().slice(0,7)):0;
-      const historyNav=document.querySelector('.nav[data-page="history"]');
-      const unitsNav=document.querySelector('.nav[data-page="units"]');
-      document.querySelectorAll('.navBadgeV50').forEach(x=>x.remove());
-      if(unpaid>0&&historyNav) historyNav.insertAdjacentHTML('beforeend',`<em class="navBadgeV50">${unpaid}</em>`);
-      if(due>0&&unitsNav) unitsNav.insertAdjacentHTML('beforeend',`<em class="navBadgeV50">${due}</em>`);
-    }catch(e){}
+    document.querySelectorAll('.navBadgeV50').forEach(x=>x.remove());
   };
   const oldNav=window.nav;
   window.nav=function(p){ if(typeof oldNav==='function') oldNav(p); setTimeout(updateNavBadgesV50,80); };
@@ -3492,6 +3483,183 @@ body.dark .homeKpiV97.warning{--kpi-soft:#3a2b10}body.dark .homeKpiV97.danger{--
 })();
 </script>
 
+<style id="utilityhub-v10-multi-property-style">
+.propertyBarV100{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin:-4px 0 18px;padding:13px 14px;border:1px solid var(--line);border-radius:21px;background:var(--card);box-shadow:var(--soft-shadow,var(--shadow));position:relative;overflow:hidden}.propertyBarV100:before{content:"";position:absolute;right:-38px;top:-52px;width:120px;height:120px;border-radius:50%;background:rgba(var(--accent-rgb),.07)}.propertyBarV100>*{position:relative;z-index:1}.propertySelectWrapV100 label{display:flex;align-items:center;gap:7px;margin:0 0 6px;color:var(--muted);font-size:10px;font-weight:950;letter-spacing:1.2px;text-transform:uppercase}.propertySelectWrapV100 label .svgIcon{width:16px;height:16px;color:var(--green)!important}.propertySelectV100{width:100%;height:43px;padding:0 38px 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--text);font-weight:950;outline:0}.propertySelectV100:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.11)}.propertyManageBtnV100{height:43px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 14px;border:1px solid var(--green);border-radius:14px;background:var(--soft);color:var(--green);font-size:12px;font-weight:950;white-space:nowrap}.propertyManageBtnV100 .svgIcon{width:17px;height:17px;color:currentColor!important}
+.propertyPortfolioV100{display:grid;gap:13px}.propertyPortfolioHeroV100{padding:18px;border-radius:22px;background:linear-gradient(135deg,var(--green),#0ea5e9);color:#fff}.propertyPortfolioHeroV100 h2{margin:0 0 5px}.propertyPortfolioHeroV100 p{margin:0;color:rgba(255,255,255,.83);font-size:12px;font-weight:750;line-height:1.4}.propertyPortfolioTotalsV100{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.propertyPortfolioTotalsV100 div{padding:10px;border-radius:14px;background:rgba(255,255,255,.14)}.propertyPortfolioTotalsV100 span,.propertyMetricV100 span{display:block;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;opacity:.78}.propertyPortfolioTotalsV100 b{display:block;margin-top:4px;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.propertyListV100{display:grid;gap:10px}.propertyCardV100{padding:14px;border:1px solid var(--line);border-radius:19px;background:var(--bg)}.propertyCardV100.active{border-color:var(--green);box-shadow:0 0 0 2px rgba(var(--accent-rgb),.09)}.propertyCardHeadV100{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center}.propertyIconV100{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:var(--soft);color:var(--green)}.propertyIconV100 .svgIcon{width:22px;height:22px;color:currentColor!important}.propertyCardHeadV100 h3{margin:0;font-size:14px}.propertyCardHeadV100 p{margin:3px 0 0;color:var(--muted);font-size:10px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.propertyActiveBadgeV100{padding:5px 8px;border-radius:999px;background:var(--soft);color:var(--green);font-size:9px;font-weight:950;text-transform:uppercase}.propertyMetricsV100{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:11px}.propertyMetricV100{min-width:0;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.propertyMetricV100 b{display:block;margin-top:4px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.propertyActionsV100{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.propertyActionV100{padding:8px 10px;border-radius:11px;background:var(--card);border:1px solid var(--line);color:var(--text);font-size:10px;font-weight:900}.propertyActionV100.primary{background:var(--green);border-color:var(--green);color:#fff}.propertyActionV100.danger{background:#fef2f2;border-color:#fecaca;color:#b91c1c}.propertySettingsCardV100{border-left:5px solid var(--green)}.propertySettingsHeadV100{display:flex;justify-content:space-between;gap:12px;align-items:center}.propertySettingsHeadV100 h3{margin:0;font-size:17px}.propertySettingsHeadV100 p{margin:4px 0 0;color:var(--muted);font-size:11px;font-weight:750}.propertyCountV100{min-width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--soft);color:var(--green);font-size:18px;font-weight:950}
+body.dark .propertyBarV100{background:#111827;border-color:#263244}body.dark .propertySelectV100,body.dark .propertyCardV100{background:#0b1220;border-color:#334155}body.dark .propertyMetricV100,body.dark .propertyActionV100{background:#111827;border-color:#334155;color:#f8fafc}body.dark .propertyActionV100.danger{background:#450a0a;color:#fecaca;border-color:#7f1d1d}
+@media(max-width:560px){.propertyBarV100{grid-template-columns:minmax(0,1fr) auto;padding:11px}.propertyManageBtnV100{width:43px;padding:0;font-size:0}.propertyManageBtnV100 .svgIcon{width:20px;height:20px}.propertyPortfolioTotalsV100{grid-template-columns:1fr 1fr}.propertyPortfolioTotalsV100 div:last-child{grid-column:1/-1}.propertyMetricsV100{grid-template-columns:1fr 1fr}}
+</style>
+
+<script id="utilityhub-v10-multi-property-script">
+(function(){
+  'use strict';
+  const VERSION_V100='v10.0';
+  const PROPERTY_SETTING_KEYS_V100=['propertyName','propertyAddress','currency','electricMode','waterMode','electricRate','waterRate','footer','receipt','readingDueDay','paymentTermsDays','warnMultiplier','photoMaxWidth','photoQuality','utilityProviders','activeUtilityProviders','homeDisplay'];
+  let readyV100=false,originalSaveV100=null,originalRenderSettingsV100=null,originalExportDataV100=null;
+
+  function cloneV100(value){try{return JSON.parse(JSON.stringify(value))}catch(e){return value}}
+  function escV100(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+  function numV100(value){const result=Number(value);return Number.isFinite(result)?result:0}
+  function idV100(){return typeof uid==='function'?uid():'property-'+Date.now()+'-'+Math.random().toString(36).slice(2,8)}
+  function iconV100(name){return typeof svgIcon==='function'?svgIcon(name):''}
+  function moneyV100(value){return typeof money==='function'?money(numV100(value)):(db?.settings?.currency||'₱')+numV100(value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function chargeV100(reading){return Math.max(0,numV100(reading?.current)-numV100(reading?.previous))*numV100(reading?.rate)}
+  function pickedSettingsV100(){const out={};PROPERTY_SETTING_KEYS_V100.forEach(key=>{if(db.settings[key]!==undefined)out[key]=cloneV100(db.settings[key])});return out}
+  function freshPropertySettingsV100(){return {currency:db?.settings?.currency||'₱',electricMode:'manual',waterMode:'bill',electricRate:16,waterRate:50,footer:'Thank you.',receipt:typeof defaultReceiptOptions==='function'?defaultReceiptOptions():{},readingDueDay:25,paymentTermsDays:7,warnMultiplier:1.5,photoMaxWidth:1200,photoQuality:.72,utilityProviders:[],activeUtilityProviders:{}}}
+  function normalizePropertyV100(property,index){
+    const p=property||{};
+    return {id:String(p.id||idV100()),name:String(p.name||p.settings?.propertyName||('Property '+(index+1))).trim()||('Property '+(index+1)),address:String(p.address||p.settings?.propertyAddress||''),createdAt:p.createdAt||new Date().toISOString(),occupants:Array.isArray(p.occupants)?p.occupants:[],bills:Array.isArray(p.bills)?p.bills:[],readings:Array.isArray(p.readings)?p.readings:[],utilitySettings:{...(p.settings||{}),...(p.utilitySettings||{})}};
+  }
+  function propertiesV100(){return Array.isArray(db?.properties)?db.properties:[]}
+  function activePropertyV100(){return propertiesV100().find(p=>p.id===db?.settings?.activePropertyId)||propertiesV100()[0]||null}
+  function ensurePropertiesV100(){
+    if(typeof db==='undefined'||!db||!db.settings)return false;
+    let changed=false;
+    if(!Array.isArray(db.properties)||!db.properties.length){
+      const migrated=normalizePropertyV100({id:idV100(),name:db.settings.propertyName||'My Property',address:db.settings.propertyAddress||'',occupants:Array.isArray(db.occupants)?db.occupants:[],bills:Array.isArray(db.bills)?db.bills:[],readings:Array.isArray(db.readings)?db.readings:[],utilitySettings:pickedSettingsV100()},0);
+      db.properties=[migrated];db.settings.activePropertyId=migrated.id;changed=true;
+    }else{
+      db.properties=db.properties.map(normalizePropertyV100);
+      const ids=new Set();db.properties=db.properties.filter(p=>{if(ids.has(p.id)){changed=true;return false}ids.add(p.id);return true});
+    }
+    if(!db.properties.some(p=>p.id===db.settings.activePropertyId)){db.settings.activePropertyId=db.properties[0].id;changed=true}
+    db.settings.schemaVersion=VERSION_V100;
+    return changed;
+  }
+  function syncActiveV100(){
+    if(!db||!db.settings)return;
+    ensurePropertiesV100();const p=activePropertyV100();if(!p)return;
+    p.name=String(db.settings.propertyName||p.name||'My Property').trim()||'My Property';p.address=String(db.settings.propertyAddress||'');
+    p.occupants=Array.isArray(db.occupants)?db.occupants:[];p.bills=Array.isArray(db.bills)?db.bills:[];p.readings=Array.isArray(db.readings)?db.readings:[];p.utilitySettings=pickedSettingsV100();
+  }
+  function loadPropertyV100(property){
+    if(!property)return;
+    db.settings.activePropertyId=property.id;db.occupants=property.occupants;db.bills=property.bills;db.readings=property.readings;
+    Object.entries(property.utilitySettings||{}).forEach(([key,value])=>{if(PROPERTY_SETTING_KEYS_V100.includes(key))db.settings[key]=cloneV100(value)});
+    db.settings.propertyName=property.name;db.settings.propertyAddress=property.address||'';db.settings.schemaVersion=VERSION_V100;
+    try{if(typeof ensureProviderDataV88==='function')ensureProviderDataV88(db);if(typeof syncProviderThemeV88==='function')syncProviderThemeV88()}catch(e){}
+  }
+  function persistWithoutRenderV100(){
+    syncActiveV100();
+    try{if(typeof idbSet==='function')idbSet(KEY,db).catch(()=>{})}catch(e){}
+    try{if(typeof lsSet==='function')lsSet(KEY,JSON.stringify(db));else localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}
+  }
+  function propertyStatsV100(property){
+    const bills=property.bills||[],readings=property.readings||[],billed=readings.reduce((sum,r)=>sum+chargeV100(r),0),paid=readings.filter(r=>r.status==='paid').reduce((sum,r)=>sum+numV100(r.paymentAmount||chargeV100(r)),0);
+    return {main:bills.reduce((sum,b)=>sum+numV100(b.charges),0),billed,paid,balance:Math.max(0,billed-paid),occupants:(property.occupants||[]).length,records:readings.length};
+  }
+  function renderPropertyBarV100(){
+    if(!readyV100||typeof db==='undefined'||!db)return;
+    ensurePropertiesV100();let bar=document.getElementById('propertyBarV100');const dashboard=document.getElementById('dashboard');if(!dashboard)return;
+    if(!bar){bar=document.createElement('section');bar.id='propertyBarV100';bar.className='propertyBarV100 noPrint';dashboard.parentNode.insertBefore(bar,dashboard)}
+    const active=activePropertyV100();bar.innerHTML=`<div class="propertySelectWrapV100"><label for="propertySelectV100">${iconV100('home')} Active property</label><select id="propertySelectV100" class="propertySelectV100" onchange="switchPropertyV100(this.value)">${propertiesV100().map(p=>`<option value="${escV100(p.id)}" ${p.id===active?.id?'selected':''}>${escV100(p.name)}</option>`).join('')}</select></div><button class="propertyManageBtnV100" onclick="openPropertiesManagerV100()" title="Manage properties">${iconV100('settings')} Manage</button>`;
+  }
+  function propertyCardV100(property){
+    const s=propertyStatsV100(property),active=property.id===db.settings.activePropertyId;
+    return `<article class="propertyCardV100 ${active?'active':''}"><div class="propertyCardHeadV100"><span class="propertyIconV100">${iconV100('home')}</span><span><h3>${escV100(property.name)}</h3><p>${escV100(property.address||'No address set')}</p></span>${active?'<span class="propertyActiveBadgeV100">Active</span>':''}</div><div class="propertyMetricsV100"><div class="propertyMetricV100"><span>Units</span><b>${s.occupants}</b></div><div class="propertyMetricV100"><span>Main bills</span><b>${moneyV100(s.main)}</b></div><div class="propertyMetricV100"><span>Collected</span><b>${moneyV100(s.paid)}</b></div><div class="propertyMetricV100"><span>Outstanding</span><b>${moneyV100(s.balance)}</b></div></div><div class="propertyActionsV100">${active?'':`<button class="propertyActionV100 primary" onclick="switchPropertyV100('${escV100(property.id)}')">Switch here</button>`}<button class="propertyActionV100" onclick="formPropertyV100('${escV100(property.id)}')">Edit</button>${propertiesV100().length>1?`<button class="propertyActionV100 danger" onclick="deletePropertyV100('${escV100(property.id)}')">Delete</button>`:''}</div></article>`;
+  }
+  window.openPropertiesManagerV100=function(){
+    syncActiveV100();const totals=propertiesV100().reduce((out,p)=>{const s=propertyStatsV100(p);out.units+=s.occupants;out.main+=s.main;out.balance+=s.balance;return out},{units:0,main:0,balance:0});
+    openSheet(`<div class="propertyPortfolioV100"><section class="propertyPortfolioHeroV100"><h2>Property portfolio</h2><p>Switch workspaces or manage each property's units, bills, readings, providers, and utility settings.</p><div class="propertyPortfolioTotalsV100"><div><span>Properties</span><b>${propertiesV100().length}</b></div><div><span>Total units</span><b>${totals.units}</b></div><div><span>Portfolio outstanding</span><b>${moneyV100(totals.balance)}</b></div></div></section><button class="btn" onclick="formPropertyV100()">Add Property</button><div class="propertyListV100">${propertiesV100().map(propertyCardV100).join('')}</div><button class="btn secondary" onclick="closeSheet()">Close</button></div>`);
+  };
+  window.formPropertyV100=function(propertyId){
+    syncActiveV100();const p=propertyId?propertiesV100().find(item=>item.id===propertyId):null;
+    openSheet(`<h2>${p?'Edit':'Add'} Property</h2><div class="field"><label>Property name</label><input id="propertyNameV100" maxlength="80" value="${escV100(p?.name||'')}" placeholder="e.g., Rusco Apartments"></div><div class="field"><label>Property address</label><textarea id="propertyAddressV100" maxlength="240" placeholder="Building, street, city">${escV100(p?.address||'')}</textarea></div>${p?'':`<div class="receiptOptions"><label class="receiptOption"><input id="propertyCopySettingsV100" type="checkbox" checked><span><b>Copy utility setup</b><small>Use the current property's rates, providers, receipt options, and billing preferences.</small></span></label><label class="receiptOption"><input id="propertyCopyOccupantsV100" type="checkbox"><span><b>Copy occupants and units</b><small>Copy unit profiles only. Bills, readings, and payment history start empty.</small></span></label></div>`}<button class="btn" onclick="savePropertyV100('${escV100(p?.id||'')}')">${p?'Save Property':'Create Property'}</button><button class="btn secondary" onclick="openPropertiesManagerV100()">Back</button>`);
+  };
+  window.savePropertyV100=function(propertyId){
+    const name=document.getElementById('propertyNameV100')?.value.trim()||'',address=document.getElementById('propertyAddressV100')?.value.trim()||'';if(!name){toast('Enter a property name');document.getElementById('propertyNameV100')?.focus();return}
+    syncActiveV100();if(propertyId){const p=propertiesV100().find(item=>item.id===propertyId);if(!p)return;p.name=name;p.address=address;if(p.id===db.settings.activePropertyId){db.settings.propertyName=name;db.settings.propertyAddress=address}}
+    else{const active=activePropertyV100(),copySettings=document.getElementById('propertyCopySettingsV100')?.checked!==false,copyOccupants=document.getElementById('propertyCopyOccupantsV100')?.checked===true;const p=normalizePropertyV100({id:idV100(),name,address,occupants:copyOccupants?cloneV100(active?.occupants||[]):[],bills:[],readings:[],utilitySettings:copySettings?cloneV100(active?.utilitySettings||pickedSettingsV100()):freshPropertySettingsV100()},propertiesV100().length);db.properties.push(p);db.settings.activePropertyId=p.id;loadPropertyV100(p)}
+    save();closeSheet();renderPropertyBarV100();toast(propertyId?'Property updated':'Property created');
+  };
+  window.switchPropertyV100=function(propertyId){
+    ensurePropertiesV100();const target=propertiesV100().find(p=>p.id===propertyId);if(!target||target.id===db.settings.activePropertyId){closeSheet();return}
+    syncActiveV100();loadPropertyV100(target);save();closeSheet();if(typeof applyTheme==='function')applyTheme();if(typeof render==='function')render();renderPropertyBarV100();toast('Switched to '+target.name);
+  };
+  window.deletePropertyV100=function(propertyId){
+    ensurePropertiesV100();if(propertiesV100().length<=1){toast('Keep at least one property');return}const target=propertiesV100().find(p=>p.id===propertyId);if(!target)return;const stats=propertyStatsV100(target);if(!confirm(`Delete ${target.name}?\n\nThis permanently removes ${stats.occupants} occupant(s), ${target.bills.length} main bill(s), and ${target.readings.length} reading(s) from this device.`))return;
+    syncActiveV100();db.properties=db.properties.filter(p=>p.id!==propertyId);if(db.settings.activePropertyId===propertyId)loadPropertyV100(db.properties[0]);save();openPropertiesManagerV100();renderPropertyBarV100();toast('Property deleted');
+  };
+  function installSettingsCardV100(){
+    const root=document.getElementById('settings');if(!root||root.querySelector('.propertySettingsCardV100'))return;const active=activePropertyV100();const card=document.createElement('div');card.className='card propertySettingsCardV100';card.innerHTML=`<div class="propertySettingsHeadV100"><div><div class="label">Property Portfolio</div><h3>${escV100(active?.name||'Active property')}</h3><p>${propertiesV100().length} propert${propertiesV100().length===1?'y':'ies'} configured • Data and utility setup are isolated per property.</p></div><span class="propertyCountV100">${propertiesV100().length}</span></div><button class="btn secondary" onclick="openPropertiesManagerV100()">Manage Properties</button>`;root.prepend(card);
+  }
+  function installPatchesV100(){
+    if(originalSaveV100)return;
+    originalSaveV100=window.save;window.save=function(){syncActiveV100();return originalSaveV100.apply(this,arguments)};
+    originalRenderSettingsV100=window.renderSettings;window.renderSettings=function(){const result=originalRenderSettingsV100.apply(this,arguments);installSettingsCardV100();return result};
+    originalExportDataV100=window.exportData;window.exportData=function(){syncActiveV100();db.settings.schemaVersion=VERSION_V100;return originalExportDataV100.apply(this,arguments)};
+    window.resetData=function(){if(!confirm('Reset all properties and permanently remove every bill, reading, payment, and occupant on this device?'))return;db=seed();ensurePropertiesV100();loadPropertyV100(db.properties[0]);save();if(typeof render==='function')render();renderPropertyBarV100();toast('All property data reset')};
+    window.importDataFile=function(file,fromSetup){if(!file)return;const reader=new FileReader();reader.onload=function(){try{const raw=JSON.parse(reader.result);if(!raw||typeof raw!=='object')throw Error('Invalid structure');const imported=normalizeDb(raw);if(!imported.settings||!Array.isArray(imported.occupants)||!Array.isArray(imported.bills)||!Array.isArray(imported.readings))throw Error('Invalid structure');const count=Array.isArray(imported.properties)&&imported.properties.length?imported.properties.length:1,totalUnits=Array.isArray(imported.properties)&&imported.properties.length?imported.properties.reduce((sum,p)=>sum+(Array.isArray(p.occupants)?p.occupants.length:0),0):imported.occupants.length;if(!confirm(`Import ${count} propert${count===1?'y':'ies'} with ${totalUnits} occupant/unit profile(s)?\n\nThis replaces the current property portfolio on this device.`))return;db=imported;if(fromSetup)db.settings.setupDone=true;ensurePropertiesV100();loadPropertyV100(activePropertyV100());if(typeof upgradeV32==='function')upgradeV32();save();closeSheet();if(typeof applyTheme==='function')applyTheme();render();renderPropertyBarV100();toast('Property portfolio imported')}catch(error){alert('Invalid backup file. The file could not be read or does not match the UtilityHub data structure.')}};reader.readAsText(file)};
+    const importer=document.getElementById('importer');if(importer)importer.onchange=e=>{window.importDataFile(e.target.files[0],document.getElementById('setupImportFlag')?.value==='1');e.target.value=''};
+  }
+  function initializeV100(){
+    if(readyV100||typeof db==='undefined'||!db||!db.settings){setTimeout(initializeV100,80);return}
+    ensurePropertiesV100();loadPropertyV100(activePropertyV100());installPatchesV100();readyV100=true;persistWithoutRenderV100();renderPropertyBarV100();if(typeof render==='function')render();renderPropertyBarV100();document.title='UtilityHub v10.0 — Multi-Property Utility Management';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(initializeV100,0),{once:true});else setTimeout(initializeV100,0);
+  window.addEventListener('pageshow',()=>setTimeout(()=>{if(readyV100){renderPropertyBarV100();document.title='UtilityHub v10.0 — Multi-Property Utility Management'}else initializeV100()},160));
+})();
+</script>
+
+<style id="utilityhub-v10-5-main-bill-reminders-style">
+/* v10.5 — desktop add label, main-bill payments, due dates, and reminders */
+@media(min-width:900px){
+  .bottom .navAddV6 .navTextV6{display:block!important;visibility:visible!important;opacity:1!important;flex:1 1 auto!important;width:auto!important;max-width:none!important;margin:0!important;color:var(--green)!important;font-size:12px!important;font-weight:950!important;line-height:1.2!important;text-align:left!important;white-space:nowrap!important;overflow:visible!important}
+}
+.mainBillReminderBtnV105{position:relative}.mainBillReminderBadgeV105{position:absolute;right:-3px;top:-4px;min-width:19px;height:19px;padding:0 5px;border:2px solid var(--card);border-radius:999px;display:grid;place-items:center;background:#dc2626;color:#fff;font-size:9px;font-weight:950;line-height:1}.mainBillReminderBadgeV105[hidden]{display:none!important}
+.mainBillReminderBannerV105{width:100%;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:11px;align-items:center;margin:0 0 13px;padding:12px 13px;border:1px solid #fed7aa;border-radius:18px;background:#fff7ed;color:#9a3412;text-align:left;box-shadow:var(--shadow-sm,var(--shadow))}.mainBillReminderBannerV105.urgent{background:#fef2f2;border-color:#fecaca;color:#991b1b}.mainBillReminderBannerV105 .svgIcon{width:22px;height:22px;color:currentColor!important}.mainBillReminderBannerV105>span:first-child{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.7)}.mainBillReminderBannerV105 b{display:block;font-size:12px}.mainBillReminderBannerV105 small{display:block;margin-top:3px;color:currentColor;opacity:.8;font-size:9px;font-weight:800;line-height:1.35}.mainBillReminderBannerV105 strong{font-size:18px}
+.mainBillStatusV105{display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:5px 9px;border-radius:999px;border:1px solid;font-size:9px;font-weight:950}.mainBillStatusV105.paid{background:#f0fdf4;border-color:#bbf7d0;color:#166534}.mainBillStatusV105.unpaid{background:#fff7ed;border-color:#fed7aa;color:#9a3412}.mainBillStatusV105.overdue{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.mainBillScheduleGridV105{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.mainBillScheduleGridV105>.field{margin:0}.mainBillScheduleGridV105>.field.full{grid-column:1/-1}.mainBillScheduleGridV105 input,.mainBillScheduleGridV105 select{min-height:49px;background:var(--bg);border-color:var(--line);font-weight:800}.mainBillPaidFieldsV105{display:contents}.mainBillPaidFieldsV105[hidden]{display:none!important}
+.mainBillReminderSheetV105{display:grid;gap:13px}.mainBillReminderHeroV105{padding:18px;border-radius:22px;background:linear-gradient(135deg,#0b74e5,#0758b4);color:#fff}.mainBillReminderHeroV105 h2{margin:0 0 5px;color:#fff}.mainBillReminderHeroV105 p{margin:0;color:rgba(255,255,255,.82);font-size:11px;font-weight:750;line-height:1.4}.mainBillReminderSummaryV105{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.mainBillReminderMetricV105{padding:11px;border:1px solid var(--line);border-radius:15px;background:var(--bg)}.mainBillReminderMetricV105 span{display:block;color:var(--muted);font-size:8px;font-weight:950;text-transform:uppercase}.mainBillReminderMetricV105 b{display:block;margin-top:5px;font-size:18px}.mainBillReminderListV105{display:grid;gap:8px}.mainBillReminderItemV105{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:17px;background:var(--bg)}.mainBillReminderItemV105.urgent{border-left:4px solid #dc2626}.mainBillReminderItemV105.warning{border-left:4px solid #d97706}.mainBillReminderIconV105{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#eaf4ff;color:#0b74e5}.mainBillReminderItemV105.urgent .mainBillReminderIconV105{background:#fef2f2;color:#dc2626}.mainBillReminderItemV105.warning .mainBillReminderIconV105{background:#fff7ed;color:#d97706}.mainBillReminderIconV105 .svgIcon{width:20px;height:20px;color:currentColor!important}.mainBillReminderItemV105 b{display:block;font-size:11px}.mainBillReminderItemV105 small{display:block;margin-top:3px;color:var(--muted);font-size:9px;font-weight:750;line-height:1.35}.mainBillReminderActionsV105{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.mainBillReminderActionsV105 button{padding:7px 9px;border-radius:10px;background:var(--soft);color:var(--green);font-size:9px;font-weight:950;white-space:nowrap}.mainBillPaymentFormV105{display:grid;gap:10px}.mainBillPaymentSummaryV105{padding:13px;border:1px solid var(--line);border-radius:18px;background:var(--bg)}.mainBillPaymentSummaryV105 b{display:block}.mainBillPaymentSummaryV105 small{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:750}
+.operationsBillRemindersV105{margin:0;padding:15px;border:1px solid #fed7aa;border-radius:22px;background:#fff7ed;box-shadow:var(--shadow-sm,var(--shadow))}.operationsBillRemindersV105.urgent{border-color:#fecaca;background:#fef2f2}.operationsBillRemindersV105 header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}.operationsBillRemindersV105 h3{margin:0;font-size:15px}.operationsBillRemindersV105 p{margin:3px 0 0;color:var(--muted);font-size:9px;font-weight:750}.operationsBillRemindersV105 header button{padding:7px 9px;border-radius:10px;background:var(--card);color:var(--green);font-size:9px;font-weight:950}
+body.dark .mainBillReminderBannerV105,body.dark .operationsBillRemindersV105{background:#563708;border-color:#805612;color:#ffe08a}body.dark .mainBillReminderBannerV105.urgent,body.dark .operationsBillRemindersV105.urgent{background:#581821;border-color:#832b37;color:#ffc1c7}body.dark .mainBillStatusV105.paid{background:#0d462d;border-color:#1b6b48;color:#9ff0c6}body.dark .mainBillStatusV105.unpaid{background:#563708;border-color:#805612;color:#ffe08a}body.dark .mainBillStatusV105.overdue{background:#581821;border-color:#832b37;color:#ffc1c7}body.dark .mainBillReminderMetricV105,body.dark .mainBillReminderItemV105,body.dark .mainBillPaymentSummaryV105{background:#091a2c;border-color:#294765}body.dark .mainBillReminderIconV105{background:#0b3b66;color:#9bd5ff}body.dark .mainBillReminderItemV105.urgent .mainBillReminderIconV105{background:#581821;color:#ffc1c7}body.dark .mainBillReminderItemV105.warning .mainBillReminderIconV105{background:#563708;color:#ffe08a}
+@media(max-width:600px){.mainBillReminderBannerV105{grid-template-columns:38px minmax(0,1fr)}.mainBillReminderBannerV105 strong{grid-column:2}.mainBillScheduleGridV105,.mainBillReminderSummaryV105{grid-template-columns:1fr}.mainBillReminderItemV105{grid-template-columns:36px minmax(0,1fr)}.mainBillReminderActionsV105{grid-column:2;justify-content:flex-start}}
+</style>
+
+<script id="utilityhub-v10-5-main-bill-reminders-script">
+(function(){
+  'use strict';
+  const VERSION_V105='v10.5';
+  let installedV105=false,notifiedV105=false;
+  function numberV105(value){const result=Number(value);return Number.isFinite(result)?result:0}
+  function escapeV105(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+  function iconV105(name){return typeof svgIcon==='function'?svgIcon(name):''}
+  function moneyV105(value){return typeof money==='function'?money(numberV105(value)):(db?.settings?.currency||'₱')+numberV105(value).toFixed(2)}
+  function todayV105(){const date=new Date(),offset=date.getTimezoneOffset();return new Date(date.getTime()-offset*60000).toISOString().slice(0,10)}
+  function dateLabelV105(value){if(!value)return 'No due date';const date=new Date(value+'T00:00:00');return Number.isNaN(date.getTime())?value:date.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
+  function dayDifferenceV105(value){if(!value)return null;const due=new Date(value+'T00:00:00'),today=new Date(todayV105()+'T00:00:00');return Number.isNaN(due.getTime())?null:Math.round((due-today)/86400000)}
+  function billV105(id){return (db?.bills||[]).find(item=>item.id===id)||null}
+  function providerV105(mainBill){try{return typeof utilityBrandName==='function'?utilityBrandName(mainBill.utility,mainBill.providerId):(mainBill.utility==='water'?'Water':'Electricity')}catch(e){return mainBill.utility==='water'?'Water':'Electricity'}}
+  function paidV105(mainBill){return mainBill?.mainPaymentStatus==='paid'||mainBill?.mainPaid===true}
+  function reminderTextV105(item){if(item.kind==='missing')return 'Add the provider due date';if(item.days<0)return `${Math.abs(item.days)} day${Math.abs(item.days)===1?'':'s'} overdue`;if(item.days===0)return 'Due today';if(item.days===1)return 'Due tomorrow';return `Due in ${item.days} days`}
+  function migrateBillsV105(){let changed=false;(db?.bills||[]).forEach(mainBill=>{if(!mainBill.mainPaymentStatus){mainBill.mainPaymentStatus=mainBill.mainPaid?'paid':'unpaid';changed=true}if(mainBill.mainPaymentAmount===undefined){mainBill.mainPaymentAmount=mainBill.mainPaymentStatus==='paid'?numberV105(mainBill.charges):0;changed=true}if(mainBill.mainPaymentDate===undefined){mainBill.mainPaymentDate='';changed=true}if(mainBill.dueDate===undefined){mainBill.dueDate='';changed=true}if(mainBill.mainPaymentReference===undefined){mainBill.mainPaymentReference='';changed=true}});if(db?.settings&&db.settings.mainBillReminderDays===undefined){db.settings.mainBillReminderDays=7;changed=true}return changed}
+  window.mainBillReminderDataV105=function(){const lead=Math.max(0,numberV105(db?.settings?.mainBillReminderDays)||7),items=[];(db?.bills||[]).filter(mainBill=>!paidV105(mainBill)).forEach(mainBill=>{if(!mainBill.dueDate){items.push({bill:mainBill,kind:'missing',days:null,tone:'warning'});return}const days=dayDifferenceV105(mainBill.dueDate);if(days!==null&&days<=lead)items.push({bill:mainBill,kind:days<0?'overdue':days===0?'today':'upcoming',days,tone:days<=0?'urgent':'warning'})});items.sort((a,b)=>(a.tone==='urgent'?0:1)-(b.tone==='urgent'?0:1)||(a.days??999)-(b.days??999)||String(a.bill.dueDate||'').localeCompare(String(b.bill.dueDate||'')));return {lead,items,overdue:items.filter(item=>item.kind==='overdue').length,dueSoon:items.filter(item=>item.kind==='today'||item.kind==='upcoming').length,missing:items.filter(item=>item.kind==='missing').length}}
+  function applyDesktopManageLabelV105(){const add=document.querySelector('nav.bottom .navAddV6');if(!add)return;let label=add.querySelector('.navTextV6');if(!label){label=document.createElement('span');label.className='navTextV6';add.appendChild(label)}label.textContent='Add / Manage';add.setAttribute('aria-label','Add or manage records');const desktop=typeof matchMedia==='function'?matchMedia('(min-width:900px)').matches:(window.innerWidth||0)>=900;label.style.setProperty('display',desktop?'block':'none','important');label.style.setProperty('visibility',desktop?'visible':'hidden','important');label.style.setProperty('opacity',desktop?'1':'0','important')}
+  window.applyDesktopManageLabelV105=applyDesktopManageLabelV105;
+  function ensureReminderButtonV105(){const actions=document.querySelector('.head-actions');if(!actions)return;let button=document.getElementById('mainBillReminderButtonV105');if(!button){button=document.createElement('button');button.id='mainBillReminderButtonV105';button.type='button';button.className='iconbtn mainBillReminderBtnV105';button.title='Main bill due-date reminders';button.setAttribute('aria-label','Open main bill reminders');button.setAttribute('onclick','openMainBillRemindersV105()');button.innerHTML=`${iconV105('calendar')}<span id="mainBillReminderBadgeV105" class="mainBillReminderBadgeV105" aria-live="polite" hidden></span>`;actions.prepend(button)}const data=mainBillReminderDataV105(),badge=document.getElementById('mainBillReminderBadgeV105');if(badge){badge.textContent=data.items.length>99?'99+':String(data.items.length);badge.hidden=!data.items.length}button.setAttribute('aria-label',data.items.length?`Open ${data.items.length} main bill reminder${data.items.length===1?'':'s'}`:'Open main bill reminders')}
+  function itemHtmlV105(item){const mainBill=item.bill;return `<article class="mainBillReminderItemV105 ${item.tone}"><span class="mainBillReminderIconV105">${iconV105(item.kind==='missing'?'calendar':'alert')}</span><span><b>${escapeV105(providerV105(mainBill))} • ${escapeV105(mainBill.month||'')}</b><small>${escapeV105(reminderTextV105(item))}${mainBill.dueDate?' • '+escapeV105(dateLabelV105(mainBill.dueDate)):''} • ${escapeV105(moneyV105(mainBill.charges))}</small></span><span class="mainBillReminderActionsV105"><button type="button" onclick="formBill('${escapeV105(mainBill.id)}')">Edit bill</button><button type="button" onclick="formMainBillPaymentV105('${escapeV105(mainBill.id)}')">${paidV105(mainBill)?'Payment':'Mark paid'}</button></span></article>`}
+  window.openMainBillRemindersV105=function(){const data=mainBillReminderDataV105();openSheet(`<div class="mainBillReminderSheetV105"><header class="mainBillReminderHeroV105"><h2>Main Bill Reminders</h2><p>${escapeV105(db?.settings?.propertyName||'Active property')} • Due dates and provider payments</p></header><section class="mainBillReminderSummaryV105"><div class="mainBillReminderMetricV105"><span>Overdue</span><b>${data.overdue}</b></div><div class="mainBillReminderMetricV105"><span>Due soon</span><b>${data.dueSoon}</b></div><div class="mainBillReminderMetricV105"><span>Missing dates</span><b>${data.missing}</b></div></section><div class="mainBillReminderListV105">${data.items.length?data.items.map(itemHtmlV105).join(''):`<div class="empty">All recorded main bills are paid or outside the ${data.lead}-day reminder window.</div>`}</div><button type="button" class="btn secondary" onclick="closeSheet()">Close</button></div>`)};
+  window.updateMainBillPaymentFieldsV105=function(){const status=document.getElementById('bMainPaymentStatus')?.value||document.getElementById('mainBillQuickStatusV105')?.value||'unpaid',paid=status==='paid';document.querySelectorAll('.mainBillPaidFieldsV105').forEach(group=>group.hidden=!paid);if(paid){const date=document.getElementById('bMainPaymentDate')||document.getElementById('mainBillQuickPaidDateV105'),amount=document.getElementById('bMainPaymentAmount')||document.getElementById('mainBillQuickAmountV105'),charges=document.getElementById('bCharges');if(date&&!date.value)date.value=todayV105();if(amount&&!numberV105(amount.value))amount.value=numberV105(charges?.value||billV105(document.querySelector('.mainBillPaymentFormV105')?.dataset.billId)?.charges).toFixed(2)}};
+  function injectBillFieldsV105(id){const mainBill=billV105(id)||{},body=document.querySelector('.billBodyV92');if(!body||body.querySelector('.mainBillScheduleSectionV105'))return;const sections=body.querySelectorAll('.billSectionV92'),anchor=sections.length?sections[sections.length-1]:null,html=`<section class="billSectionV92 mainBillScheduleSectionV105"><div class="billSectionHeadV92"><span class="billSectionIconV92">${iconV105('calendar')}</span><div><h3>Due date and provider payment</h3><p>Track when this main bill must be paid and record the completed provider payment.</p></div></div><div class="mainBillScheduleGridV105"><div class="field"><label for="bMainDueDate">Payment due date <span class="billFieldTagV92">Required</span></label><input id="bMainDueDate" type="date" required value="${escapeV105(mainBill.dueDate||'')}"></div><div class="field"><label for="bMainPaymentStatus">Provider payment <span class="billFieldTagV92">Required</span></label><select id="bMainPaymentStatus" onchange="updateMainBillPaymentFieldsV105()"><option value="unpaid" ${!paidV105(mainBill)?'selected':''}>Unpaid — reminder active</option><option value="paid" ${paidV105(mainBill)?'selected':''}>Paid — completed</option></select></div><div class="mainBillPaidFieldsV105" ${paidV105(mainBill)?'':'hidden'}><div class="field"><label for="bMainPaymentDate">Date paid <span class="billFieldTagV92">Required when paid</span></label><input id="bMainPaymentDate" type="date" value="${escapeV105(mainBill.mainPaymentDate||'')}"></div><div class="field"><label for="bMainPaymentAmount">Amount paid</label><input id="bMainPaymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" value="${escapeV105(mainBill.mainPaymentAmount||'')}"></div><div class="field full"><label for="bMainPaymentReference">Payment reference <span class="billFieldTagV92">Optional</span></label><input id="bMainPaymentReference" maxlength="100" value="${escapeV105(mainBill.mainPaymentReference||'')}" placeholder="Transaction or receipt number"></div></div></div></section>`;if(anchor)anchor.insertAdjacentHTML('beforebegin',html);else body.insertAdjacentHTML('beforeend',html);updateMainBillPaymentFieldsV105()}
+  window.formMainBillPaymentV105=function(id){const mainBill=billV105(id);if(!mainBill)return;openSheet(`<div class="mainBillPaymentFormV105" data-bill-id="${escapeV105(id)}"><h2>Provider Payment</h2><div class="mainBillPaymentSummaryV105"><b>${escapeV105(providerV105(mainBill))} • ${escapeV105(mainBill.month||'')}</b><small>${escapeV105(moneyV105(mainBill.charges))} • ${mainBill.dueDate?'Due '+escapeV105(dateLabelV105(mainBill.dueDate)):'Due date not recorded'}</small></div><div class="field"><label for="mainBillQuickDueV105">Payment due date</label><input id="mainBillQuickDueV105" type="date" required value="${escapeV105(mainBill.dueDate||'')}"></div><div class="field"><label for="mainBillQuickStatusV105">Payment status</label><select id="mainBillQuickStatusV105" onchange="updateMainBillPaymentFieldsV105()"><option value="unpaid" ${!paidV105(mainBill)?'selected':''}>Unpaid</option><option value="paid" ${paidV105(mainBill)?'selected':''}>Paid</option></select></div><div class="mainBillPaidFieldsV105" ${paidV105(mainBill)?'':'hidden'}><div class="field"><label for="mainBillQuickPaidDateV105">Date paid</label><input id="mainBillQuickPaidDateV105" type="date" value="${escapeV105(mainBill.mainPaymentDate||'')}"></div><div class="field"><label for="mainBillQuickAmountV105">Amount paid</label><input id="mainBillQuickAmountV105" type="number" min="0.01" step="0.01" value="${escapeV105(mainBill.mainPaymentAmount||mainBill.charges||'')}"></div><div class="field"><label for="mainBillQuickRefV105">Payment reference</label><input id="mainBillQuickRefV105" maxlength="100" value="${escapeV105(mainBill.mainPaymentReference||'')}"></div></div><button type="button" class="btn" onclick="saveMainBillPaymentV105('${escapeV105(id)}')">Save Provider Payment</button><button type="button" class="btn secondary" onclick="closeSheet()">Cancel</button></div>`);updateMainBillPaymentFieldsV105()};
+  window.saveMainBillPaymentV105=function(id){const mainBill=billV105(id);if(!mainBill)return;const due=document.getElementById('mainBillQuickDueV105')?.value||'',status=document.getElementById('mainBillQuickStatusV105')?.value||'unpaid',paidDate=document.getElementById('mainBillQuickPaidDateV105')?.value||'',amount=numberV105(document.getElementById('mainBillQuickAmountV105')?.value),reference=String(document.getElementById('mainBillQuickRefV105')?.value||'').trim();if(!due){toast('Enter the main bill due date');document.getElementById('mainBillQuickDueV105')?.focus();return}if(status==='paid'&&!paidDate){toast('Enter the date the main bill was paid');document.getElementById('mainBillQuickPaidDateV105')?.focus();return}mainBill.dueDate=due;mainBill.mainPaymentStatus=status;mainBill.mainPaymentDate=status==='paid'?paidDate:'';mainBill.mainPaymentAmount=status==='paid'?(amount||numberV105(mainBill.charges)):0;mainBill.mainPaymentReference=status==='paid'?reference:'';mainBill.updatedAt=new Date().toISOString();save();closeSheet();toast(status==='paid'?'Main bill marked paid':'Main bill payment updated')};
+  function statusHtmlV105(mainBill){const days=dayDifferenceV105(mainBill.dueDate),isPaid=paidV105(mainBill),overdue=!isPaid&&days!==null&&days<0,cls=isPaid?'paid':overdue?'overdue':'unpaid',text=isPaid?`Paid${mainBill.mainPaymentDate?' • '+dateLabelV105(mainBill.mainPaymentDate):''}`:mainBill.dueDate?`${overdue?'Overdue':'Unpaid'} • Due ${dateLabelV105(mainBill.dueDate)}`:'Unpaid • Due date missing';return `<span class="mainBillStatusV105 ${cls}">${escapeV105(text)}</span>`}
+  function renderDashboardReminderV105(){const root=document.getElementById('dashboard');if(!root)return;root.querySelector('.mainBillReminderBannerV105')?.remove();const data=mainBillReminderDataV105();if(!data.items.length)return;const urgent=data.overdue||data.items.some(item=>item.kind==='today'),banner=document.createElement('button');banner.type='button';banner.className=`mainBillReminderBannerV105 ${urgent?'urgent':''}`;banner.setAttribute('onclick','openMainBillRemindersV105()');banner.innerHTML=`<span>${iconV105(urgent?'alert':'calendar')}</span><span><b>${urgent?'Main bill payment needs attention':'Main bill reminders'}</b><small>${data.overdue?`${data.overdue} overdue • `:''}${data.dueSoon} due soon • ${data.missing} missing due date${data.missing===1?'':'s'}</small></span><strong>${data.items.length}</strong>`;root.prepend(banner)}
+  function renderOperationsBillRemindersV105(){const root=document.getElementById('operations');if(!root)return;root.querySelector('.operationsBillRemindersV105')?.remove();const data=mainBillReminderDataV105();if(!data.items.length)return;const panel=document.createElement('section');panel.className=`operationsBillRemindersV105 ${data.overdue?'urgent':''}`;panel.innerHTML=`<header><div><h3>Main bill payments</h3><p>${data.overdue?`${data.overdue} overdue • `:''}${data.dueSoon} due soon • ${data.missing} missing due date${data.missing===1?'':'s'}</p></div><button type="button" onclick="openMainBillRemindersV105()">View all</button></header><div class="mainBillReminderListV105">${data.items.slice(0,3).map(itemHtmlV105).join('')}</div>`;const hero=root.querySelector('.operationsHeroV103');if(hero)hero.insertAdjacentElement('afterend',panel);else root.prepend(panel)}
+  function maybeNotifyV105(){if(notifiedV105)return;notifiedV105=true;const data=mainBillReminderDataV105();if(!data.items.length)return;const property=db?.settings?.activePropertyId||'default',key=`utilityhub-main-bill-reminder:${property}:${todayV105()}`;try{if(localStorage.getItem(key))return;localStorage.setItem(key,'1')}catch(e){}setTimeout(()=>{if(typeof toast==='function')toast(data.overdue?`${data.overdue} main bill${data.overdue===1?' is':'s are'} overdue`:`${data.items.length} main bill reminder${data.items.length===1?'':'s'} available`)},900)}
+  function installV105(){if(installedV105||typeof db==='undefined'||!db){setTimeout(installV105,90);return}installedV105=true;const migrated=migrateBillsV105();
+    const previousFormBill=window.formBill;window.formBill=function(id){const result=typeof previousFormBill==='function'?previousFormBill.apply(this,arguments):undefined;injectBillFieldsV105(id);return result};
+    const previousSaveBill=window.saveBill;window.saveBill=function(edit){const due=document.getElementById('bMainDueDate')?.value||'',status=document.getElementById('bMainPaymentStatus')?.value||'unpaid',paidDate=document.getElementById('bMainPaymentDate')?.value||'',amount=numberV105(document.getElementById('bMainPaymentAmount')?.value),reference=String(document.getElementById('bMainPaymentReference')?.value||'').trim();if(!due){if(typeof toast==='function')toast('Enter the main bill due date');document.getElementById('bMainDueDate')?.focus();return}if(status==='paid'&&!paidDate){if(typeof toast==='function')toast('Enter the date the main bill was paid');document.getElementById('bMainPaymentDate')?.focus();return}const beforeIds=new Set((db.bills||[]).map(item=>item.id)),before=edit?JSON.stringify(billV105(edit)||null):'',result=typeof previousSaveBill==='function'?previousSaveBill.apply(this,arguments):undefined,saved=edit?billV105(edit):(db.bills||[]).find(item=>!beforeIds.has(item.id)),committed=!!saved&&(!edit||JSON.stringify(saved)!==before);if(committed){saved.dueDate=due;saved.mainPaymentStatus=status;saved.mainPaymentDate=status==='paid'?paidDate:'';saved.mainPaymentAmount=status==='paid'?(amount||numberV105(saved.charges)):0;saved.mainPaymentReference=status==='paid'?reference:'';saved.updatedAt=new Date().toISOString();save()}return result};
+    const previousRecordRow=window.recordRow;if(typeof previousRecordRow==='function')window.recordRow=function(record){const html=previousRecordRow.apply(this,arguments);if(record?.type!=='bill')return html;return html.replace('<div class="chipbar">',`${statusHtmlV105(record)}<div class="chipbar"><button type="button" class="miniBtn" onclick="formMainBillPaymentV105('${escapeV105(record.id)}')">${paidV105(record)?'Payment details':'Mark paid'}</button>`)};
+    const previousRender=window.render;window.render=function(){const result=typeof previousRender==='function'?previousRender.apply(this,arguments):undefined;applyDesktopManageLabelV105();ensureReminderButtonV105();renderDashboardReminderV105();renderOperationsBillRemindersV105();return result};
+    const previousOperations=window.renderOperationsV103;if(typeof previousOperations==='function')window.renderOperationsV103=function(){const result=previousOperations.apply(this,arguments);renderOperationsBillRemindersV105();return result};
+    window.addEventListener('resize',applyDesktopManageLabelV105);db.settings.appVersion=VERSION_V105;if(migrated&&typeof save==='function')save();else{applyDesktopManageLabelV105();ensureReminderButtonV105();renderDashboardReminderV105();renderOperationsBillRemindersV105()}maybeNotifyV105();document.title='UtilityHub v10.5 — Main Bill Payments & Due Reminders';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(installV105,40),{once:true});else setTimeout(installV105,40);
+  window.addEventListener('pageshow',()=>setTimeout(()=>{if(!installedV105)installV105();else{applyDesktopManageLabelV105();ensureReminderButtonV105();renderDashboardReminderV105();renderOperationsBillRemindersV105();document.title='UtilityHub v10.5 — Main Bill Payments & Due Reminders'}},360));
+})();
+</script>
+
 </body>
 </html>
 
@@ -4259,7 +4427,7 @@ body.dark .addMenuCopyV75 small{color:#97a0ac!important}
       if(label && map[page]) label.textContent=map[page];
     });
     const add=dock.querySelector('.navAddV6 .navTextV6');
-    if(add) add.textContent='';
+    if(add) add.textContent='Add / Manage';
   }
   function patchMenuCopyV77(){
     const menu=document.getElementById('addMenuV75');
@@ -5011,6 +5179,7 @@ body.dark .addMenuV75 button:active{background:#15324f!important}
     wallet:'<path d="M4 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6Z"/><path d="M4 6V5a2 2 0 0 1 2-2h10"/><path d="M15 11h6v4h-6a2 2 0 0 1 0-4Z"/>',
     calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M7 14h2M12 14h2M17 14h.01M7 18h2M12 18h2"/>',
     alert:'<path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5M12 18h.01"/>',
+    info:'<circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/>',
     image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/>',
     users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
     phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/>',
@@ -7221,6 +7390,7 @@ body.dark .validationIssueV90{background:#0f2945;border-color:#234665}
   };
 
   function initializeValidationV90(){
+    if(typeof db==='undefined'||!db){setTimeout(initializeValidationV90,80);return}
     document.title='UtilityHub v9.0 — Validation & Data Integrity';
     document.querySelectorAll('input[type="date"]').forEach(el=>{if(!el.max)el.max=localTodayV90()});
     document.querySelectorAll('input[type="month"]').forEach(el=>{if(!el.max)el.max=localMonthV90()});
@@ -8063,6 +8233,401 @@ body.dark .insightActionIconV96.warning{background:rgba(234,88,12,.16);color:#fd
   let resizeTimerV96;window.addEventListener('resize',()=>{clearTimeout(resizeTimerV96);resizeTimerV96=setTimeout(()=>{if((typeof current!=='undefined'?current:'')==='reports')drawChart()},100)});
   document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target?.matches?.('.insightsRankRowV96,.insightsMonthRowV96')){e.preventDefault();e.target.click()}});
   window.addEventListener('pageshow',()=>setTimeout(()=>{document.title='UtilityHub v9.9 — Splash Startup Fix';if(typeof db!=='undefined'&&db){try{titles();renderReports()}catch(e){console.error('Insights v9.6 render error',e)}}},100));
+})();
+</script>
+
+<script id="utilityhub-v10-title-stability-script">
+(function(){
+  const title='UtilityHub v10.3 — Operations & Monthly Workflow',apply=()=>{if(document.title!==title)document.title=title};
+  const titleNode=document.querySelector('title');if(titleNode)new MutationObserver(apply).observe(titleNode,{childList:true,subtree:true,characterData:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(apply,1200),{once:true});else setTimeout(apply,1200);
+  window.addEventListener('pageshow',()=>setTimeout(apply,1300));
+})();
+</script>
+
+<style id="utilityhub-v10-1-quality-stability-style">
+/* Counts belong in dashboard cards; compact dock badges caused overlap on phones. */
+.navBadgeV50,.bottom .navBadgeV50,.bottom .countBadge{display:none!important}
+.bottom .nav,.navPillV75 .nav{position:relative;overflow:visible!important}
+
+/* One predictable icon system across every surface and theme. */
+.svgIcon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:currentColor}
+.svgIcon svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.svgIcon.lineIcon svg *{vector-effect:non-scaling-stroke}
+.iconbtn,.iconAction,.historyIconBtnV45,.sheetCloseV50,.closeSheetBtn,.propertyManageBtnV100{display:inline-flex;align-items:center;justify-content:center}
+.iconbtn .svgIcon{width:22px!important;height:22px!important}
+.iconAction .svgIcon,.historyIconBtnV45 .svgIcon,.sheetCloseV50 .svgIcon,.closeSheetBtn .svgIcon{width:20px!important;height:20px!important}
+
+/* Reliable click and keyboard affordances. */
+button,[role="button"],select,label[for],input[type="checkbox"],input[type="radio"]{touch-action:manipulation}
+button:not(:disabled),[role="button"]{cursor:pointer}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed!important;opacity:.55}
+button:focus-visible,[role="button"]:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid rgba(var(--accent-rgb),.25)!important;outline-offset:2px!important}
+.card::before,.card::after,.quickAction::before,.quickAction::after,.choice::before,.choice::after,.homeUtilityV97::after,.propertyBarV100::before{pointer-events:none!important}
+
+/* Dark mode surface and icon normalization. */
+body.dark .svgIcon{color:currentColor}
+body.dark .iconbtn,body.dark .iconAction:not(.danger),body.dark .historyIconBtnV45:not(.danger),body.dark .sheetCloseV50,body.dark .closeSheetBtn{background:#102944!important;border-color:#294765!important;color:#8fc4ff!important}
+body.dark .navPillV75 .nav .svgIcon{color:#8ea6c0!important}
+body.dark .navPillV75 .nav.active .svgIcon{color:#69b5ff!important}
+body.dark .navPillV75 .nav.active{background:#12385c!important;color:#b9ddff!important}
+body.dark .propertyBarV100,body.dark .propertyCardV100,body.dark .propertyMetricV100,body.dark .propertySettingsCardV100{border-color:#294765!important}
+body.dark .propertySelectV100{background:#091a2c!important;border-color:#294765!important;color:#f2f7fc!important}
+body.dark .propertyManageBtnV100{background:#102f4d!important;border-color:#3273ad!important;color:#9ed0ff!important}
+body.dark .propertyPortfolioHeroV100{box-shadow:0 16px 36px rgba(0,0,0,.35)}
+body.dark .billNoticeV92,body.dark .readingNoticeV95{background:#0b2943!important;border-color:#245379!important;color:#d5eaff!important}
+
+@media(max-width:560px){
+  .bottom .nav,.navPillV75 .nav{min-width:0!important}
+  .navPillV75 .nav .navTextV6{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+</style>
+
+<script id="utilityhub-v10-1-quality-stability-script">
+(function(){
+  'use strict';
+  const VERSION_V101='v10.1';
+
+  function removeNavigationBadgesV101(){document.querySelectorAll('.navBadgeV50,.bottom .countBadge').forEach(node=>node.remove())}
+  window.updateNavBadgesV50=removeNavigationBadgesV101;
+
+  const previousSvgIconV101=window.svgIcon;
+  window.svgIcon=function(name){
+    if(name==='info')return '<span class="svgIcon lineIcon icon-info" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg></span>';
+    return typeof previousSvgIconV101==='function'?previousSvgIconV101(name):'';
+  };
+
+  function csvCellV101(value){const text=String(value??'');return /[",\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text}
+  function downloadCsvV101(filename,rows){
+    const csv='\ufeff'+rows.map(row=>row.map(csvCellV101).join(',')).join('\n'),blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),anchor=document.createElement('a');
+    anchor.href=url;anchor.download=filename;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),500);
+  }
+  function numberV101(value){const result=Number(value);return Number.isFinite(result)?result:0}
+  function chargeV101(reading){return typeof rCharge==='function'?numberV101(rCharge(reading)):Math.max(0,numberV101(reading?.current)-numberV101(reading?.previous))*numberV101(reading?.rate)}
+  function occupantV101(id){return (db?.occupants||[]).find(item=>item.id===id)||{name:'Unknown occupant',code:'Unit'} }
+  function safeFileV101(value){return String(value||'property').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'property'}
+
+  window.exportCsvSummary=function(){
+    if(typeof db==='undefined'||!db)return;
+    const months=[...new Set([...(db.bills||[]).map(item=>item.month),...(db.readings||[]).map(item=>item.month)].filter(Boolean))].sort().reverse();
+    const property=db.settings?.propertyName||'Property',rows=[['Property','Month','Main Bills','Occupant Billed','Collected','Outstanding','Owner Share','Electricity kWh','Water cu.m','Readings']];
+    months.forEach(month=>{const bills=(db.bills||[]).filter(item=>item.month===month),readings=(db.readings||[]).filter(item=>item.month===month),main=bills.reduce((sum,item)=>sum+numberV101(item.charges),0),billed=readings.reduce((sum,item)=>sum+chargeV101(item),0),paid=readings.filter(item=>item.status==='paid').reduce((sum,item)=>sum+numberV101(item.paymentAmount||chargeV101(item)),0);rows.push([property,month,main,billed,paid,Math.max(0,billed-paid),main-billed,bills.filter(item=>item.utility==='electric').reduce((sum,item)=>sum+numberV101(item.consumption),0),bills.filter(item=>item.utility==='water').reduce((sum,item)=>sum+numberV101(item.consumption),0),readings.length])});
+    downloadCsvV101(`utilityhub-${safeFileV101(property)}-monthly-summary.csv`,rows);if(typeof toast==='function')toast('Monthly CSV exported');
+  };
+  window.exportCsvLedger=function(){
+    if(typeof db==='undefined'||!db)return;
+    const property=db.settings?.propertyName||'Property',rows=[['Property','Month','Occupant','Unit','Utility','Previous','Current','Consumption','Rate','Charge','Payment Status','Payment Amount','Payment Date','Verification','Photo Proof']];
+    (db.readings||[]).slice().sort((a,b)=>String(b.month||'').localeCompare(String(a.month||''))).forEach(reading=>{const occupant=occupantV101(reading.occupantId),charge=chargeV101(reading);rows.push([property,reading.month||'',occupant.name,occupant.code,reading.utility||'',numberV101(reading.previous),numberV101(reading.current),Math.max(0,numberV101(reading.current)-numberV101(reading.previous)),numberV101(reading.rate),charge,reading.status||'unpaid',numberV101(reading.paymentAmount||0),reading.paymentDate||'',reading.verificationStatus||'draft',reading.photo?'Yes':'No'])});
+    downloadCsvV101(`utilityhub-${safeFileV101(property)}-occupant-ledger.csv`,rows);if(typeof toast==='function')toast('Occupant ledger exported');
+  };
+
+  function normalizeInteractiveElementsV101(root){
+    const scope=root||document;removeNavigationBadgesV101();
+    scope.querySelectorAll('button:not([type])').forEach(button=>button.type='button');
+    scope.querySelectorAll('button[title]:not([aria-label])').forEach(button=>button.setAttribute('aria-label',button.title));
+    scope.querySelectorAll('[role="button"][tabindex="0"]:not([data-keyboard-ready-v101])').forEach(element=>{element.dataset.keyboardReadyV101='1';element.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();element.click()}})});
+  }
+  function initializeV101(){
+    normalizeInteractiveElementsV101(document);if(typeof db!=='undefined'&&db?.settings){db.settings.appVersion=VERSION_V101;try{if(typeof save==='function')save()}catch(e){}}
+    const observer=new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===1)normalizeInteractiveElementsV101(node)})));observer.observe(document.body,{childList:true,subtree:true});
+    document.title='UtilityHub v10.1 — Quality & Navigation Stabilization';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initializeV101,{once:true});else initializeV101();
+  window.addEventListener('pageshow',()=>setTimeout(()=>{normalizeInteractiveElementsV101(document);document.title='UtilityHub v10.1 — Quality & Navigation Stabilization'},200));
+})();
+</script>
+
+<style id="utilityhub-v10-2-dark-icon-contrast-style">
+/* v10.2 — WCAG-oriented icon contrast for dark surfaces */
+body.dark .homeQuickIconV97{
+  border:1px solid rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 7px 16px rgba(0,0,0,.28)!important;
+}
+body.dark .homeQuickV97:nth-child(1) .homeQuickIconV97{background:#0b74e5!important}
+body.dark .homeQuickV97:nth-child(2) .homeQuickIconV97{background:#2563c7!important}
+body.dark .homeQuickV97:nth-child(3) .homeQuickIconV97{background:#078653!important}
+body.dark .homeQuickV97:nth-child(4) .homeQuickIconV97{background:#a94c08!important}
+body.dark .homeQuickIconV97 .svgIcon,
+body.dark .homeQuickIconV97 .svgIcon svg{
+  color:#fff!important;
+  stroke:#fff!important;
+  opacity:1!important;
+}
+
+body.dark .homeKpiV97 .homeKpiIconV97{
+  background:#0b3b66!important;
+  color:#9bd5ff!important;
+  border:1px solid #245f91!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+body.dark .homeKpiV97.success .homeKpiIconV97{
+  background:#0d462d!important;
+  color:#9ff0c6!important;
+  border-color:#1b6b48!important;
+}
+body.dark .homeKpiV97.warning .homeKpiIconV97{
+  background:#563708!important;
+  color:#ffe08a!important;
+  border-color:#805612!important;
+}
+body.dark .homeKpiV97.danger .homeKpiIconV97{
+  background:#581821!important;
+  color:#ffc1c7!important;
+  border-color:#832b37!important;
+}
+body.dark .homeKpiIconV97 .svgIcon,
+body.dark .homeKpiIconV97 .svgIcon svg{
+  color:inherit!important;
+  stroke:currentColor!important;
+  opacity:1!important;
+}
+
+body.dark .homeMiniMetricV97>.svgIcon{
+  width:32px!important;
+  height:32px!important;
+  flex-basis:32px!important;
+  padding:7px!important;
+  border-radius:10px!important;
+  background:#0b3b66!important;
+  color:#9bd5ff!important;
+  border:1px solid #245f91!important;
+}
+body.dark .homeMiniMetricV97>.svgIcon svg{stroke:currentColor!important}
+
+body.dark .homeTaskIconV97,
+body.dark .homeRecentIconV97{
+  background:#0b3b66!important;
+  color:#9bd5ff!important;
+  border:1px solid #245f91!important;
+}
+body.dark .homeTaskV97.success .homeTaskIconV97{background:#0d462d!important;color:#9ff0c6!important;border-color:#1b6b48!important}
+body.dark .homeTaskV97.warning .homeTaskIconV97{background:#563708!important;color:#ffe08a!important;border-color:#805612!important}
+body.dark .homeTaskV97.danger .homeTaskIconV97{background:#581821!important;color:#ffc1c7!important;border-color:#832b37!important}
+body.dark .homeTaskV97.info .homeTaskIconV97{background:#0b3b66!important;color:#9bd5ff!important;border-color:#245f91!important}
+body.dark .homeTaskIconV97 .svgIcon,
+body.dark .homeTaskIconV97 .svgIcon svg,
+body.dark .homeRecentIconV97 .svgIcon,
+body.dark .homeRecentIconV97 .svgIcon svg{color:inherit!important;stroke:currentColor!important;opacity:1!important}
+
+body.dark .insightActionIconV96{
+  background:#0b3b66!important;
+  color:#9bd5ff!important;
+  border:1px solid #245f91!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+body.dark .insightActionIconV96.success{background:#0d462d!important;color:#9ff0c6!important;border-color:#1b6b48!important}
+body.dark .insightActionIconV96.warning{background:#563708!important;color:#ffe08a!important;border-color:#805612!important}
+body.dark .insightActionIconV96.danger{background:#581821!important;color:#ffc1c7!important;border-color:#832b37!important}
+body.dark .insightActionIconV96 .svgIcon,
+body.dark .insightActionIconV96 .svgIcon svg{color:inherit!important;stroke:currentColor!important;opacity:1!important}
+body.dark .insightActionArrowV96{color:#b9d8f3!important}
+
+body.dark .insightsKpiHeadV96 .svgIcon,
+body.dark .insightsKpiHeadV96 .svgIcon svg{color:var(--kpi,#69b5ff)!important;stroke:currentColor!important;opacity:1!important}
+body.dark .billNoticeV92 .svgIcon,
+body.dark .billNoticeV92 .svgIcon svg,
+body.dark .readingNoticeV95 .svgIcon,
+body.dark .readingNoticeV95 .svgIcon svg{color:currentColor!important;stroke:currentColor!important;opacity:1!important}
+
+body.dark .homeQuickIconV97 .svgIcon svg,
+body.dark .homeKpiIconV97 .svgIcon svg,
+body.dark .homeTaskIconV97 .svgIcon svg,
+body.dark .homeRecentIconV97 .svgIcon svg,
+body.dark .insightActionIconV96 .svgIcon svg{stroke-width:2.35!important}
+</style>
+
+<style id="utilityhub-v10-3-operations-workflow-style">
+/* v10.3 — adaptive navigation */
+.navPillV75{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.desktopNavBrandV103{display:none}
+.operationsV103{display:grid;gap:13px}
+.operationsHeroV103{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:20px;border:1px solid var(--stroke,var(--line));border-radius:25px;background:linear-gradient(145deg,var(--surface,var(--card)),var(--surface-2,var(--bg)));box-shadow:var(--shadow-sm,var(--shadow))}
+.operationsHeroV103:after{content:"";position:absolute;right:-60px;top:-78px;width:190px;height:190px;border-radius:52% 48% 45% 55%;background:var(--green);opacity:.07;pointer-events:none}.operationsHeroV103>*{position:relative;z-index:1}.operationsEyebrowV103{color:var(--green);font-size:10px;font-weight:950;letter-spacing:1.7px;text-transform:uppercase}.operationsHeroV103 h2{margin:5px 0 5px;font-size:clamp(24px,5vw,33px);letter-spacing:-.7px}.operationsHeroV103 p{margin:0;max-width:560px;color:var(--muted);font-size:12px;font-weight:750;line-height:1.45}.operationsHeroActionV103{min-height:46px;padding:0 15px;border-radius:15px;background:var(--green);color:#fff;font-size:12px;font-weight:950;white-space:nowrap;box-shadow:0 10px 22px rgba(var(--accent-rgb),.22)}
+.operationsSummaryV103{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.operationsStatV103{padding:13px;border:1px solid var(--stroke,var(--line));border-radius:18px;background:var(--surface,var(--card));box-shadow:var(--shadow-sm,var(--shadow));min-width:0}.operationsStatV103 span{display:block;color:var(--muted);font-size:9px;font-weight:950;letter-spacing:.7px;text-transform:uppercase}.operationsStatV103 b{display:block;margin-top:6px;font-size:22px;letter-spacing:-.4px}.operationsStatV103.urgent{border-left:4px solid #dc2626}.operationsStatV103.warning{border-left:4px solid #d97706}.operationsStatV103.info{border-left:4px solid #0284c7}.operationsStatV103.success{border-left:4px solid #16a34a}
+.operationsToolbarV103{display:flex;gap:8px;align-items:center;overflow:auto;padding:2px 0 4px;scrollbar-width:none}.operationsToolbarV103::-webkit-scrollbar{display:none}.operationsFilterV103{white-space:nowrap;padding:9px 12px;border-radius:999px;border:1px solid var(--stroke,var(--line));background:var(--surface,var(--card));color:var(--muted);font-size:11px;font-weight:950}.operationsFilterV103.active{background:var(--soft);border-color:rgba(var(--accent-rgb),.32);color:var(--green)}
+.operationsPanelV103{padding:15px;border:1px solid var(--stroke,var(--line));border-radius:22px;background:var(--surface,var(--card));box-shadow:var(--shadow-sm,var(--shadow))}.operationsPanelHeadV103{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.operationsPanelHeadV103 h3{margin:0;font-size:16px}.operationsPanelHeadV103 small{color:var(--muted);font-size:10px;font-weight:800}.operationsListV103{display:grid;gap:8px}.operationItemV103{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;padding:11px;border:1px solid var(--stroke,var(--line));border-radius:16px;background:var(--surface-2,var(--bg));color:var(--text);text-align:left}.operationIconV103{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#eaf4ff;color:#0b74e5}.operationIconV103 .svgIcon{width:20px;height:20px;color:inherit!important}.operationItemV103.urgent .operationIconV103{background:#fef2f2;color:#dc2626}.operationItemV103.warning .operationIconV103{background:#fff7ed;color:#d97706}.operationItemV103.success .operationIconV103{background:#f0fdf4;color:#16a34a}.operationItemV103 b{display:block;font-size:12px}.operationItemV103 small{display:block;margin-top:3px;color:var(--muted);font-size:9px;font-weight:750;line-height:1.35}.operationActionV103{padding:7px 9px;border-radius:10px;background:var(--surface,var(--card));border:1px solid var(--stroke,var(--line));color:var(--green);font-size:9px;font-weight:950;white-space:nowrap}.operationsEmptyV103{padding:27px 16px;text-align:center;border:1px dashed var(--stroke,var(--line));border-radius:18px;background:var(--surface-2,var(--bg))}.operationsEmptyV103 .svgIcon{width:31px;height:31px;margin:0 auto 8px;color:#16a34a!important}.operationsEmptyV103 b{display:block}.operationsEmptyV103 small{display:block;margin:5px auto 0;max-width:340px;color:var(--muted);font-size:10px;font-weight:750;line-height:1.4}
+
+/* v10.3 — guided monthly workflow */
+.workflowV103{display:grid;gap:13px}.workflowHeroV103{padding:17px;border-radius:21px;background:linear-gradient(135deg,#0b74e5,#0758b4);color:#fff;box-shadow:0 15px 32px rgba(11,116,229,.22)}.workflowHeroV103 h2{margin:0 0 5px;color:#fff}.workflowHeroV103 p{margin:0;color:rgba(255,255,255,.82);font-size:11px;font-weight:750;line-height:1.4}.workflowProgressV103{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.workflowStepV103{min-width:0;padding:8px 5px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--muted);text-align:center;font-size:8px;font-weight:950}.workflowStepV103 span{width:22px;height:22px;margin:0 auto 4px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);font-size:9px}.workflowStepV103.active{background:var(--soft);border-color:var(--green);color:var(--green)}.workflowStepV103.done span{background:#16a34a;border-color:#16a34a;color:#fff}.workflowBodyV103{padding:15px;border:1px solid var(--line);border-radius:20px;background:var(--card)}.workflowBodyV103 h3{margin:0 0 4px;font-size:17px}.workflowBodyV103>p{margin:0 0 12px;color:var(--muted);font-size:10px;font-weight:750;line-height:1.4}.workflowMonthV103{width:100%;height:45px;padding:0 12px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--text);font-weight:900}.workflowGridV103{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.workflowCardV103{padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--bg);min-width:0}.workflowCardV103.ready{border-left:4px solid #16a34a}.workflowCardV103.pending{border-left:4px solid #d97706}.workflowCardV103.issue{border-left:4px solid #dc2626}.workflowCardV103 h4{margin:0;font-size:12px}.workflowCardV103 p{margin:4px 0 0;color:var(--muted);font-size:9px;font-weight:750;line-height:1.35}.workflowCardV103 strong{display:block;margin-top:7px;font-size:15px}.workflowCardV103 button{margin-top:9px;padding:8px 10px;border-radius:11px;background:var(--soft);color:var(--green);font-size:9px;font-weight:950}.workflowReadingListV103{display:grid;gap:7px}.workflowReadingV103{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}.workflowReadingV103 b{display:block;font-size:11px}.workflowReadingV103 small{display:block;margin-top:3px;color:var(--muted);font-size:9px;font-weight:750}.workflowReadingV103 button{padding:8px 10px;border-radius:10px;background:var(--soft);color:var(--green);font-size:9px;font-weight:950}.workflowReviewV103{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.workflowMetricV103{padding:11px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}.workflowMetricV103 span{display:block;color:var(--muted);font-size:8px;font-weight:950;text-transform:uppercase}.workflowMetricV103 b{display:block;margin-top:5px;font-size:15px}.workflowNoticeV103{margin-top:10px;padding:10px;border-radius:13px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:9px;font-weight:850;line-height:1.4}.workflowNoticeV103.success{background:#f0fdf4;border-color:#bbf7d0;color:#166534}.workflowActionsV103{display:grid;grid-template-columns:1fr 1.4fr;gap:9px}.workflowActionsV103 button{min-height:45px;border-radius:14px;font-size:11px;font-weight:950}.workflowBackV103{background:var(--bg);border:1px solid var(--line);color:var(--muted)}.workflowNextV103{background:var(--green);color:#fff}.workflowReturnV103{width:100%;margin:0 0 10px;padding:9px 11px;border-radius:12px;background:var(--soft);border:1px solid rgba(var(--accent-rgb),.2);color:var(--green);font-size:10px;font-weight:950}
+.workflowReadingV103.batch{grid-template-columns:minmax(0,1fr) minmax(112px,.55fr) auto}.workflowBatchInputV103{display:grid;gap:4px;min-width:0}.workflowBatchInputV103 span{color:var(--muted);font-size:8px;font-weight:950;text-transform:uppercase;letter-spacing:.45px}.workflowBatchInputV103 input{width:100%;height:38px;min-width:0;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text);font-weight:900;outline:none}.workflowBatchInputV103 input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.12)}.workflowBatchBarV103{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px;padding:10px 11px;border:1px solid rgba(var(--accent-rgb),.18);border-radius:14px;background:var(--soft)}.workflowBatchBarV103 span{color:var(--muted);font-size:9px;font-weight:850;line-height:1.35}.workflowBatchBarV103 b{color:var(--text)}.workflowBatchSaveV103{min-height:38px;padding:0 12px;border-radius:11px;background:var(--green);color:#fff;font-size:9px;font-weight:950;white-space:nowrap}.workflowNextV103:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+body.dark .operationsHeroV103,body.dark .operationsStatV103,body.dark .operationsPanelV103,body.dark .workflowBodyV103{background:#0d2137;border-color:#294765}body.dark .operationItemV103,body.dark .operationsEmptyV103,body.dark .workflowCardV103,body.dark .workflowReadingV103,body.dark .workflowMetricV103,body.dark .workflowStepV103{background:#091a2c;border-color:#294765}body.dark .operationIconV103{background:#0b3b66;color:#9bd5ff;border:1px solid #245f91}body.dark .operationItemV103.urgent .operationIconV103{background:#581821;color:#ffc1c7;border-color:#832b37}body.dark .operationItemV103.warning .operationIconV103{background:#563708;color:#ffe08a;border-color:#805612}body.dark .operationItemV103.success .operationIconV103{background:#0d462d;color:#9ff0c6;border-color:#1b6b48}body.dark .operationActionV103{background:#102944;border-color:#294765;color:#9bd5ff}body.dark .workflowNoticeV103{background:#563708;border-color:#805612;color:#ffe08a}body.dark .workflowNoticeV103.success{background:#0d462d;border-color:#1b6b48;color:#9ff0c6}body.dark .workflowMonthV103,body.dark .workflowBatchInputV103 input{background:#091a2c;border-color:#294765;color:#f6fbff}body.dark .workflowBatchBarV103{background:#102944;border-color:#294765}
+@media(max-width:700px){.operationsHeroV103{grid-template-columns:1fr}.operationsHeroActionV103{width:100%}.operationsSummaryV103{grid-template-columns:repeat(2,minmax(0,1fr))}.workflowGridV103,.workflowReviewV103{grid-template-columns:1fr}.operationItemV103{grid-template-columns:38px minmax(0,1fr)}.operationActionV103{grid-column:2;justify-self:start}.workflowReadingV103.batch{grid-template-columns:minmax(0,1fr) auto}.workflowBatchInputV103{grid-column:1}.workflowReadingV103.batch>button{grid-column:2;grid-row:1 / span 2}.workflowBatchBarV103{align-items:stretch;flex-direction:column}.workflowBatchSaveV103{width:100%}}
+@media(max-width:430px){.workflowProgressV103{gap:3px}.workflowStepV103{padding:7px 2px;font-size:7px}.workflowStepV103 span{width:20px;height:20px}.operationsSummaryV103{gap:7px}.operationsStatV103{padding:10px}}
+
+@media(min-width:900px){
+  body{padding-left:246px}
+  .app{width:auto!important;max-width:1180px!important;margin:0 auto!important;padding:28px 26px 46px!important}
+  .bottom{left:16px!important;top:16px!important;bottom:16px!important;transform:none!important;width:214px!important;height:auto!important;min-height:0!important;display:flex!important;flex-direction:column!important;gap:12px!important;padding:13px!important;border-radius:27px!important;background:var(--surface,var(--card))!important;border:1px solid var(--stroke,var(--line))!important;box-shadow:0 20px 48px rgba(15,23,42,.16)!important}
+  .desktopNavBrandV103{display:block;padding:13px 12px 15px;border-bottom:1px solid var(--stroke,var(--line));min-width:0}.desktopNavBrandV103 b{display:block;color:var(--ink,var(--text));font-size:17px}.desktopNavBrandV103 small{display:block;margin-top:4px;color:var(--muted);font-size:9px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .navPillV75{display:flex!important;flex-direction:column!important;grid-template-columns:none!important;width:100%!important;height:auto!important;gap:5px!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  .navPillV75 .nav{width:100%!important;min-height:48px!important;display:flex!important;flex-direction:row!important;justify-content:flex-start!important;gap:11px!important;padding:9px 11px!important;border-radius:15px!important}
+  .navPillV75 .nav .svgIcon{width:21px!important;height:21px!important;min-width:21px!important;min-height:21px!important;max-width:21px!important;max-height:21px!important}
+  .navPillV75 .nav .navTextV6{font-size:12px!important;text-align:left!important}
+  .bottom .navAddV6{order:4!important;margin-top:auto!important;width:100%!important;min-width:100%!important;max-width:100%!important;height:52px!important;min-height:52px!important;max-height:52px!important;display:flex!important;flex-direction:row!important;justify-content:flex-start!important;gap:10px!important;padding:7px 10px!important;transform:none!important;border-radius:16px!important;background:var(--soft)!important}
+  .bottom .navAddV6 .svgIcon{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;max-width:36px!important;max-height:36px!important;flex-basis:36px!important;padding:8px!important;border-radius:12px!important;box-shadow:none!important}
+  .bottom .navAddV6 .navTextV6{display:block!important;flex:1 1 auto!important;width:auto!important;margin:0!important;font-size:12px!important;line-height:1.2!important;font-weight:950!important;text-align:left!important;white-space:nowrap!important;color:var(--green)!important}
+  .addMenuV75{position:absolute!important;left:calc(100% + 12px)!important;right:auto!important;bottom:0!important;transform:translateX(-8px) scale(.97)!important;transform-origin:bottom left!important}
+  .addMenuV75.show{transform:translateX(0) scale(1)!important}
+  body.dark .bottom{background:#0d2137!important;border-color:#294765!important;box-shadow:0 20px 48px rgba(0,0,0,.38)!important}
+}
+@media print{body{padding-left:0!important}}
+</style>
+
+<script id="utilityhub-v10-3-operations-workflow-script">
+(function(){
+  'use strict';
+  const VERSION_V103='v10.4';
+  const operationsStateV103={filter:'all'};
+  const workflowStateV103={step:1,month:'',resume:null,saving:false};
+  let installedV103=false;
+  function numV103(value){const result=Number(value);return Number.isFinite(result)?result:0}
+  function htmlV103(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
+  function iconV103(name){return typeof svgIcon==='function'?svgIcon(name):''}
+  function cashV103(value){return typeof money==='function'?money(numV103(value)):(db?.settings?.currency||'₱')+numV103(value).toFixed(2)}
+  function monthV103(){const date=new Date(),offset=date.getTimezoneOffset();return new Date(date.getTime()-offset*60000).toISOString().slice(0,7)}
+  function monthNameV103(month){if(!month)return '';const [year,value]=month.split('-').map(Number);return new Date(year,value-1,1).toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+  function chargeV103(reading){return typeof rCharge==='function'?numV103(rCharge(reading)):Math.max(0,numV103(reading.current)-numV103(reading.previous))*numV103(reading.rate)}
+  function occupantV103(id){return (db?.occupants||[]).find(item=>item.id===id)||{name:'Unknown occupant',code:'Unit'} }
+  function billV103(id){return (db?.bills||[]).find(item=>item.id===id)||null}
+  function utilityNameV103(type){return type==='water'?'Water':'Electricity'}
+  function providerNameV103(type,bill){try{return typeof utilityBrandName==='function'?utilityBrandName(type,bill?.providerId):utilityNameV103(type)}catch(e){return utilityNameV103(type)}}
+
+  function ensureStructureV103(){
+    const main=document.querySelector('main.app')||document.querySelector('main');if(!main)return false;
+    if(!document.getElementById('operations')){const section=document.createElement('section');section.id='operations';section.className='page';const history=document.getElementById('history');main.insertBefore(section,history||null)}
+    const dock=document.querySelector('nav.bottom'),pill=dock?.querySelector('.navPillV75');if(!dock||!pill)return false;
+    if(!pill.querySelector('[data-page="operations"]')){const button=document.createElement('button');button.type='button';button.className='nav';button.dataset.page='operations';button.setAttribute('aria-label','Tasks');button.setAttribute('onclick',"nav('operations')");button.innerHTML=`${iconV103('alert')}<span class="navTextV6">Tasks</span>`;const history=pill.querySelector('[data-page="history"]');pill.insertBefore(button,history||null)}
+    let brand=dock.querySelector('.desktopNavBrandV103');if(!brand){brand=document.createElement('div');brand.className='desktopNavBrandV103';pill.parentNode.insertBefore(brand,pill)}brand.innerHTML=`<b>UtilityHub</b><small>${htmlV103(db?.settings?.propertyName||'Active property')}</small>`;
+    const menu=document.getElementById('addMenuV75');if(menu&&!menu.querySelector('[data-workflow-v103]')){const button=document.createElement('button');button.type='button';button.setAttribute('role','menuitem');button.dataset.workflowV103='1';button.setAttribute('onclick','toggleAddMenuV75(false);openMonthlyWorkflowV103()');button.innerHTML=`<span class="addMenuIconV75">${iconV103('calendar')}</span><span class="addMenuCopyV75"><b>Monthly Workflow</b><small>Complete bills, readings, review, and collection</small></span>`;menu.prepend(button)}
+    return true;
+  }
+  function taskDataV103(){
+    const month=monthV103(),bills=(db?.bills||[]).filter(item=>item.month===month),readings=(db?.readings||[]).filter(item=>item.month===month),items=[];
+    ['electric','water'].forEach(type=>{if(!bills.some(item=>item.utility===type))items.push({category:'readings',tone:'warning',icon:'file',title:`Add ${utilityNameV103(type).toLowerCase()} main bill`,detail:`No ${utilityNameV103(type).toLowerCase()} bill is recorded for ${monthNameV103(month)}.`,action:`launchOperationTaskV103('bill','${type}','')`,label:'Add bill'})});
+    bills.forEach(bill=>{(db.occupants||[]).forEach(occupant=>{const reading=readings.find(item=>item.billId===bill.id&&item.occupantId===occupant.id);if(!reading)items.push({category:'readings',tone:'warning',icon:'calendar',title:`Reading due • ${occupant.name}`,detail:`${occupant.code||'Unit'} • ${providerNameV103(bill.utility,bill)} • ${monthNameV103(month)}`,action:`launchOperationTaskV103('reading','${bill.utility}','${occupant.id}','${bill.id}')`,label:'Add reading'})})});
+    (db.readings||[]).filter(item=>item.status!=='paid').forEach(reading=>{const occupant=occupantV103(reading.occupantId),due=reading.dueDate||((typeof paymentDueDate==='function'&&reading.month)?paymentDueDate(reading.month):''),overdue=due&&new Date(due+'T23:59:59')<new Date();items.push({category:'payments',tone:overdue?'urgent':'warning',icon:'wallet',title:`${overdue?'Overdue':'Unpaid'} • ${occupant.name}`,detail:`${occupant.code||'Unit'} • ${reading.month||''} • ${cashV103(chargeV103(reading))}${due?' • Due '+due:''}`,action:`launchOperationTaskV103('payment','${reading.id}','')`,label:'Payment',sortDate:due||reading.month||''})});
+    (db.readings||[]).filter(item=>!item.photo||(item.verificationStatus||'draft')==='draft').forEach(reading=>{const occupant=occupantV103(reading.occupantId),missingPhoto=!reading.photo,draft=(reading.verificationStatus||'draft')==='draft',issues=[missingPhoto?'photo proof':'',draft?'verification':''].filter(Boolean);items.push({category:'verification',tone:'info',icon:missingPhoto?'camera':'eye',title:`Review reading • ${occupant.name}`,detail:`${occupant.code||'Unit'} • ${reading.month||''} • ${issues.join(' and ')} needed`,action:`launchOperationTaskV103('editReading','${reading.id}','')`,label:'Review',sortDate:reading.month||''})});
+    try{(typeof highConsumptionList==='function'?highConsumptionList():[]).forEach(reading=>{const occupant=occupantV103(reading.occupantId);items.push({category:'usage',tone:'urgent',icon:'alert',title:`High usage • ${occupant.name}`,detail:`${occupant.code||'Unit'} • ${reading.month||''} • ${utilityNameV103(reading.utility)}`,action:`launchOperationTaskV103('editReading','${reading.id}','')`,label:'Inspect',sortDate:reading.month||''})})}catch(e){}
+    const toneRank={urgent:0,warning:1,info:2,success:3},categoryRank={payments:0,usage:1,readings:2,verification:3};items.sort((a,b)=>(toneRank[a.tone]??9)-(toneRank[b.tone]??9)||(categoryRank[a.category]??9)-(categoryRank[b.category]??9)||String(a.sortDate||'').localeCompare(String(b.sortDate||''))||String(a.title||'').localeCompare(String(b.title||'')));
+    return {month,items};
+  }
+  function operationItemV103(item){return `<button type="button" class="operationItemV103 ${item.tone}" onclick="${item.action}"><span class="operationIconV103">${iconV103(item.icon)}</span><span><b>${htmlV103(item.title)}</b><small>${htmlV103(item.detail)}</small></span><span class="operationActionV103">${htmlV103(item.label)}</span></button>`}
+  window.renderOperationsV103=function(){
+    const root=document.getElementById('operations');if(!root||typeof db==='undefined'||!db)return;const data=taskDataV103(),urgent=data.items.filter(item=>item.tone==='urgent').length,payments=data.items.filter(item=>item.category==='payments').length,readings=data.items.filter(item=>item.category==='readings').length,verification=data.items.filter(item=>item.category==='verification').length,visible=operationsStateV103.filter==='all'?data.items:data.items.filter(item=>operationsStateV103.filter==='urgent'?item.tone==='urgent':item.category===operationsStateV103.filter);
+    root.innerHTML=`<div class="operationsV103"><section class="operationsHeroV103"><div><div class="operationsEyebrowV103">Operations inbox</div><h2>Handle what needs attention.</h2><p>Current property tasks are generated from bills, meter readings, due dates, payment states, photos, and verification status. Urgent items appear first.</p></div><button type="button" class="operationsHeroActionV103" onclick="openMonthlyWorkflowV103('${data.month}')">Start Monthly Workflow</button></section><section class="operationsSummaryV103"><article class="operationsStatV103 urgent"><span>Urgent</span><b>${urgent}</b></article><article class="operationsStatV103 warning"><span>Reading tasks</span><b>${readings}</b></article><article class="operationsStatV103 info"><span>Payments</span><b>${payments}</b></article><article class="operationsStatV103 success"><span>Verification</span><b>${verification}</b></article></section><div class="operationsToolbarV103" role="group" aria-label="Task filters">${[['all','All'],['urgent','Urgent'],['readings','Readings'],['payments','Payments'],['verification','Verification'],['usage','Usage']].map(([value,label])=>`<button type="button" class="operationsFilterV103 ${operationsStateV103.filter===value?'active':''}" aria-pressed="${operationsStateV103.filter===value?'true':'false'}" onclick="setOperationsFilterV103('${value}')">${label}</button>`).join('')}</div><section class="operationsPanelV103"><header class="operationsPanelHeadV103"><h3>${operationsStateV103.filter==='all'?'All open tasks':operationsStateV103.filter[0].toUpperCase()+operationsStateV103.filter.slice(1)}</h3><small>${visible.length} item${visible.length===1?'':'s'}</small></header><div class="operationsListV103">${visible.length?visible.map(operationItemV103).join(''):`<div class="operationsEmptyV103">${iconV103('eye')}<b>Nothing needs attention here</b><small>Completed work disappears automatically as the underlying records are updated.</small></div>`}</div></section></div>`;
+  };
+  window.setOperationsFilterV103=function(value){operationsStateV103.filter=value;renderOperationsV103()};
+  window.launchOperationTaskV103=function(kind,value,occupantId,mainBillId){if(kind==='bill'){formBill();setTimeout(()=>{const utility=document.getElementById('bUtility');if(utility){utility.value=value;utility.dispatchEvent(new Event('change',{bubbles:true}))}},40)}else if(kind==='reading'){launchWorkflowRecordV103('reading','',value,occupantId,mainBillId)}else if(kind==='payment')launchWorkflowRecordV103('payment',value,'','');else if(kind==='editReading')launchWorkflowRecordV103('reading',value,'','')};
+
+  function readingProviderV103(reading){return reading?.providerId||billV103(reading?.billId)?.providerId||''}
+  function previousReadingV103(occupantId,mainBill){const providerId=mainBill?.providerId||'',prior=(db?.readings||[]).filter(item=>item.occupantId===occupantId&&item.month<mainBill.month&&(providerId?readingProviderV103(item)===providerId:item.utility===mainBill.utility)).sort((a,b)=>String(b.month||'').localeCompare(String(a.month||''))||String(b.createdAt||'').localeCompare(String(a.createdAt||'')))[0];return numV103(prior?.current)}
+  function expectedReadingsV103(bills,readings){const occupants=db?.occupants||[],covered=bills.reduce((sum,mainBill)=>sum+occupants.filter(occupant=>readings.some(item=>item.billId===mainBill.id&&item.occupantId===occupant.id)).length,0);return {expected:bills.length*occupants.length,completed:covered}}
+
+  function workflowMonthsV103(){const set=new Set([monthV103()]);(db?.bills||[]).forEach(item=>item.month&&set.add(item.month));(db?.readings||[]).forEach(item=>item.month&&set.add(item.month));return [...set].sort().reverse().slice(0,18)}
+  function workflowDataV103(){const month=workflowStateV103.month||monthV103(),bills=(db?.bills||[]).filter(item=>item.month===month),readings=(db?.readings||[]).filter(item=>item.month===month),main=bills.reduce((sum,item)=>sum+numV103(item.charges),0),billed=readings.reduce((sum,item)=>sum+chargeV103(item),0),paid=readings.filter(item=>item.status==='paid').reduce((sum,item)=>sum+numV103(item.paymentAmount||chargeV103(item)),0),progress=expectedReadingsV103(bills,readings);return {month,bills,readings,main,billed,paid,outstanding:Math.max(0,billed-paid),missingPhotos:readings.filter(item=>!item.photo).length,drafts:readings.filter(item=>(item.verificationStatus||'draft')==='draft').length,expected:progress.expected,completed:progress.completed,missing:Math.max(0,progress.expected-progress.completed)}}
+  function workflowProgressV103(){const labels=['Period','Bills','Readings','Review','Collect'];return `<div class="workflowProgressV103" role="navigation" aria-label="Monthly workflow progress">${labels.map((label,index)=>{const step=index+1;return `<button type="button" class="workflowStepV103 ${step===workflowStateV103.step?'active':''} ${step<workflowStateV103.step?'done':''}" ${step===workflowStateV103.step?'aria-current="step"':''} aria-label="Step ${step}: ${label}" onclick="workflowStepV103(${step})"><span aria-hidden="true">${step<workflowStateV103.step?'✓':step}</span>${label}</button>`}).join('')}</div>`}
+  function workflowStepBodyV103(data){
+    if(workflowStateV103.step===1)return `<div class="workflowBodyV103"><h3>Choose the billing period</h3><p>This month stays selected while you complete every stage.</p><select class="workflowMonthV103" onchange="workflowMonthV103(this.value)">${workflowMonthsV103().map(month=>`<option value="${month}" ${month===data.month?'selected':''}>${htmlV103(monthNameV103(month))}</option>`).join('')}</select><div class="workflowNoticeV103 ${data.bills.length?'success':''}">${data.bills.length?`${data.bills.length} main bill(s) and ${data.readings.length} submeter reading(s) already exist for this period.`:'No records exist for this period yet. Continue to add the main utility bills.'}</div></div>`;
+    if(workflowStateV103.step===2){const covered=['electric','water'].filter(type=>data.bills.some(item=>item.utility===type)).length;return `<div class="workflowBodyV103"><h3>Add the main utility bills</h3><p>Add the utilities billed at this property. At least one main bill is required before entering submeter readings.</p><div class="workflowGridV103">${['electric','water'].map(type=>{const bill=data.bills.find(item=>item.utility===type);return `<article class="workflowCardV103 ${bill?'ready':'pending'}"><h4>${utilityNameV103(type)}</h4><p>${bill?`${providerNameV103(type,bill)} • ${numV103(bill.consumption).toLocaleString()} ${type==='water'?'cu.m':'kWh'}`:'Main bill not recorded'}</p><strong>${bill?cashV103(bill.charges):'Pending'}</strong><button type="button" onclick="launchWorkflowRecordV103('bill','${bill?.id||''}','${type}','')">${bill?'Review bill':'Add bill'}</button></article>`}).join('')}</div><div class="workflowNoticeV103 ${covered?'success':''}">${covered?`${covered} of 2 utility bill types recorded. Continue when the bills used by this property are ready.`:'Add at least one utility bill to continue.'}</div></div>`}
+    if(workflowStateV103.step===3){const rows=[];let missingInputs=0;data.bills.forEach(mainBill=>(db.occupants||[]).forEach(occupant=>{const reading=data.readings.find(item=>item.billId===mainBill.id&&item.occupantId===occupant.id);if(reading){rows.push(`<div class="workflowReadingV103"><span><b>${htmlV103(occupant.name)} • ${htmlV103(utilityNameV103(mainBill.utility))}</b><small>${htmlV103(occupant.code||'Unit')} • ${numV103(reading.previous).toLocaleString()} → ${numV103(reading.current).toLocaleString()}</small></span><button type="button" onclick="launchWorkflowRecordV103('reading','${reading.id}','${mainBill.utility}','${occupant.id}','${mainBill.id}')">Review</button></div>`);return}const previous=previousReadingV103(occupant.id,mainBill);missingInputs++;rows.push(`<div class="workflowReadingV103 batch"><span><b>${htmlV103(occupant.name)} • ${htmlV103(utilityNameV103(mainBill.utility))}</b><small>${htmlV103(occupant.code||'Unit')} • Previous: ${previous.toLocaleString()}</small></span><label class="workflowBatchInputV103"><span>Current reading</span><input type="number" min="${previous}" step="0.01" inputmode="decimal" placeholder="Enter value" aria-label="Current ${htmlV103(utilityNameV103(mainBill.utility).toLowerCase())} reading for ${htmlV103(occupant.name)}" data-batch-current-v103 data-bill-id="${htmlV103(mainBill.id)}" data-occupant-id="${htmlV103(occupant.id)}" data-previous="${previous}"></label><button type="button" title="Open the full form to add photo proof or notes" onclick="launchWorkflowRecordV103('reading','','${mainBill.utility}','${occupant.id}','${mainBill.id}')">Details</button></div>`) }));const bar=missingInputs?`<div class="workflowBatchBarV103"><span><b>${data.completed} of ${data.expected}</b> expected readings saved. Enter several current values, then save them together. Batch entries remain drafts for review.</span><button type="button" class="workflowBatchSaveV103" onclick="saveBatchReadingsV103()">Save entered readings</button></div>`:`<div class="workflowNoticeV103 success">All ${data.completed} expected readings are recorded for this period.</div>`;return `<div class="workflowBodyV103"><h3>Complete submeter readings</h3><p>Use quick batch entry below, or open Details when you need photo proof, notes, or full verification controls.</p>${data.bills.length?bar:''}<div class="workflowReadingListV103">${rows.join('')||'<div class="workflowNoticeV103">Add a main bill and at least one occupant before entering submeter readings.</div>'}</div></div>`}
+    if(workflowStateV103.step===4)return `<div class="workflowBodyV103"><h3>Review allocation quality</h3><p>Confirm totals and resolve evidence or verification gaps before collection.</p><div class="workflowReviewV103"><div class="workflowMetricV103"><span>Main bills</span><b>${cashV103(data.main)}</b></div><div class="workflowMetricV103"><span>Occupant billed</span><b>${cashV103(data.billed)}</b></div><div class="workflowMetricV103"><span>Owner share</span><b>${cashV103(data.main-data.billed)}</b></div><div class="workflowMetricV103"><span>Readings</span><b>${data.readings.length}</b></div></div><div class="workflowNoticeV103 ${!data.missingPhotos&&!data.drafts?'success':''}">${data.missingPhotos||data.drafts?`${data.missingPhotos} missing photo proof(s) and ${data.drafts} draft reading(s) should be reviewed.`:'Every reading has photo proof and is past draft status.'}</div></div>`;
+    return `<div class="workflowBodyV103"><h3>Receipts and collection</h3><p>Print receipts and record outstanding payments for this billing period.</p><div class="workflowReviewV103"><div class="workflowMetricV103"><span>Billed</span><b>${cashV103(data.billed)}</b></div><div class="workflowMetricV103"><span>Collected</span><b>${cashV103(data.paid)}</b></div><div class="workflowMetricV103"><span>Outstanding</span><b>${cashV103(data.outstanding)}</b></div><div class="workflowMetricV103"><span>Paid records</span><b>${data.readings.filter(item=>item.status==='paid').length}/${data.readings.length}</b></div></div><div class="workflowReadingListV103" style="margin-top:10px">${data.readings.map(reading=>{const occupant=occupantV103(reading.occupantId);return `<div class="workflowReadingV103"><span><b>${htmlV103(occupant.name)} • ${htmlV103(utilityNameV103(reading.utility))}</b><small>${reading.status==='paid'?'Paid':'Outstanding'} • ${cashV103(chargeV103(reading))}</small></span><button onclick="${reading.status==='paid'?`printReceipt('${reading.id}')`:`launchWorkflowRecordV103('payment','${reading.id}','','')`}">${reading.status==='paid'?'Receipt':'Payment'}</button></div>`}).join('')||'<div class="workflowNoticeV103">Add readings before generating receipts or payments.</div>'}</div></div>`;
+  }
+  window.saveBatchReadingsV103=function(){const inputs=[...document.querySelectorAll('[data-batch-current-v103]')],entered=inputs.filter(input=>String(input.value||'').trim()!=='');inputs.forEach(input=>input.setCustomValidity(''));if(!entered.length){if(typeof toast==='function')toast('Enter at least one current reading');return}const staged=[];let invalid=null,message='';for(const input of entered){const mainBill=billV103(input.dataset.billId),occupantId=input.dataset.occupantId,previous=numV103(input.dataset.previous),current=Number(input.value);if(!mainBill){invalid=input;message='The linked main bill is no longer available.';break}if(!Number.isFinite(current)||current<=0){invalid=input;message='Current readings must be greater than zero.';break}if(current<previous){invalid=input;message='A current reading cannot be lower than its previous reading.';break}if((db.readings||[]).some(item=>item.billId===mainBill.id&&item.occupantId===occupantId)){invalid=input;message='This reading was already added. Refresh the workflow and review the saved record.';break}staged.push({input,mainBill,occupantId,previous,current})}if(!invalid){for(const mainBill of [...new Set(staged.map(item=>item.mainBill))]){const existing=(db.readings||[]).filter(item=>item.billId===mainBill.id).reduce((sum,item)=>sum+Math.max(0,numV103(item.current)-numV103(item.previous)),0),added=staged.filter(item=>item.mainBill===mainBill).reduce((sum,item)=>sum+Math.max(0,item.current-item.previous),0);if(numV103(mainBill.consumption)>0&&existing+added>numV103(mainBill.consumption)+0.000001){invalid=staged.find(item=>item.mainBill===mainBill)?.input;message=`Entered ${utilityNameV103(mainBill.utility).toLowerCase()} readings exceed the main bill consumption of ${numV103(mainBill.consumption).toLocaleString()}.`;break}}}if(invalid){invalid.setCustomValidity(message);invalid.reportValidity();invalid.focus();if(typeof toast==='function')toast('Please correct the highlighted reading');return}const now=new Date().toISOString();staged.forEach(item=>db.readings.push({id:typeof uid==='function'?uid():Math.random().toString(36).slice(2),utility:item.mainBill.utility,month:item.mainBill.month,occupantId:item.occupantId,billId:item.mainBill.id,previous:item.previous,current:item.current,photo:'',rate:typeof rateForBill==='function'?numV103(rateForBill(item.mainBill)):0,status:'unpaid',verificationStatus:'draft',paymentAmount:0,paymentDate:'',createdAt:now,updatedAt:now,dueDate:typeof paymentDueDate==='function'?paymentDueDate(item.mainBill.month):'',notes:'Added through monthly batch entry'}));if(typeof save==='function')save();if(typeof toast==='function')toast(`${staged.length} reading${staged.length===1?'':'s'} saved as draft`);renderWorkflowV103()};
+  function renderWorkflowV103(){const data=workflowDataV103(),last=workflowStateV103.step===5;openSheet(`<div class="workflowV103"><header class="workflowHeroV103"><h2>Monthly Utility Workflow</h2><p>${htmlV103(db.settings?.propertyName||'Property')} • ${htmlV103(monthNameV103(data.month))}</p></header>${workflowProgressV103()}${workflowStepBodyV103(data)}<footer class="workflowActionsV103"><button type="button" class="workflowBackV103" onclick="${workflowStateV103.step===1?'closeSheet()':`workflowStepV103(${workflowStateV103.step-1})`}">${workflowStateV103.step===1?'Close':'Back'}</button><button type="button" class="workflowNextV103" onclick="${last?'finishWorkflowV103()':'advanceWorkflowV103()'}">${last?'Finish':'Continue'}</button></footer></div>`)}
+  window.openMonthlyWorkflowV103=function(month){workflowStateV103.month=month||workflowStateV103.month||monthV103();workflowStateV103.step=1;workflowStateV103.resume=null;renderWorkflowV103()};
+  window.workflowStepV103=function(step){const target=Math.max(1,Math.min(5,numV103(step)||1)),data=workflowDataV103();if(target>workflowStateV103.step&&target>=3&&workflowStateV103.step<=2&&!data.bills.length){if(typeof toast==='function')toast('Add at least one main utility bill before continuing');return}if(target>workflowStateV103.step&&target>=4&&workflowStateV103.step<=3&&data.missing>0&&!confirm(`${data.missing} of ${data.expected} expected readings are still missing. Continue to review anyway?`))return;workflowStateV103.step=target;renderWorkflowV103()};
+  window.advanceWorkflowV103=function(){workflowStepV103(workflowStateV103.step+1)};
+  window.finishWorkflowV103=function(){workflowStateV103.step=1;workflowStateV103.resume=null;closeSheet();nav('operations')};
+  window.workflowMonthV103=function(month){workflowStateV103.month=month;renderWorkflowV103()};
+  window.resumeMonthlyWorkflowV103=function(){const resume=workflowStateV103.resume;if(!resume)return;workflowStateV103.month=resume.month;workflowStateV103.step=resume.step;workflowStateV103.resume=null;renderWorkflowV103()};
+  window.launchWorkflowRecordV103=function(kind,id,type,occupantId,mainBillId){
+    workflowStateV103.resume={month:workflowStateV103.month||monthV103(),step:workflowStateV103.step||1};
+    if(kind==='bill'&&typeof formBill==='function')formBill(id||undefined);else if(kind==='reading'&&typeof formReading==='function')formReading(id||undefined);else if(kind==='payment'&&typeof formPayment==='function')formPayment(id);
+    setTimeout(()=>{
+      const addReturn=()=>{const content=document.getElementById('sheetContent');if(content&&!content.querySelector('.workflowReturnV103'))content.insertAdjacentHTML('afterbegin','<button type="button" class="workflowReturnV103" onclick="resumeMonthlyWorkflowV103()">← Return to monthly workflow</button>')};
+      if(kind==='bill'&&!id){const utility=document.getElementById('bUtility'),month=document.getElementById('bMonth');if(utility){utility.value=type;utility.dispatchEvent(new Event('change',{bubbles:true}))}if(month)month.value=workflowStateV103.resume.month;setTimeout(addReturn,40)}
+      else if(kind==='reading'&&!id){const utility=document.getElementById('rUtility');if(utility&&type){utility.value=type;if(typeof refreshReadingForm==='function')refreshReadingForm('')}setTimeout(()=>{const occupant=document.getElementById('rOcc'),linked=document.getElementById('rBill'),target=(db.bills||[]).find(item=>item.id===mainBillId)||(db.bills||[]).find(item=>item.month===workflowStateV103.resume?.month&&item.utility===type);if(occupant&&occupantId)occupant.value=occupantId;if(linked&&target){linked.value=target.id;linked.dispatchEvent(new Event('change',{bubbles:true}))}if(typeof autoPrev==='function')autoPrev('');if(typeof readingPreview==='function')readingPreview();addReturn()},80)}
+      else addReturn();
+    },80);
+  };
+  function wrapSaveV103(name){const previous=window[name];if(typeof previous!=='function'||previous.v103Wrapped)return;const wrapped=function(){const resume=workflowStateV103.resume;workflowStateV103.saving=true;let result;try{result=previous.apply(this,arguments)}finally{workflowStateV103.saving=false}setTimeout(()=>{const sheet=document.getElementById('sheet');if(resume&&!sheet?.classList.contains('show')){workflowStateV103.resume=null;workflowStateV103.month=resume.month;workflowStateV103.step=resume.step;renderWorkflowV103()}},360);return result};wrapped.v103Wrapped=true;window[name]=wrapped}
+  function installV103(){
+    if(installedV103||typeof db==='undefined'||!db){setTimeout(installV103,90);return}if(!ensureStructureV103()){setTimeout(installV103,90);return}installedV103=true;
+    const previousTitles=window.titles;window.titles=function(){if((typeof current!=='undefined'?current:'')==='operations'){const title=document.getElementById('pageTitle'),sub=document.getElementById('pageSub');if(title)title.textContent='Tasks';if(sub)sub.textContent='Operational priorities for the active property';return}if(typeof previousTitles==='function')previousTitles()};
+    const previousRender=window.render;window.render=function(){const result=typeof previousRender==='function'?previousRender.apply(this,arguments):undefined;ensureStructureV103();renderOperationsV103();return result};
+    const previousClose=window.closeSheet;window.closeSheet=function(){if(workflowStateV103.resume&&!workflowStateV103.saving)workflowStateV103.resume=null;return typeof previousClose==='function'?previousClose.apply(this,arguments):undefined};
+    ['saveBill','saveReading','savePayment'].forEach(wrapSaveV103);db.settings.appVersion=VERSION_V103;try{if(typeof save==='function')save()}catch(e){}renderOperationsV103();document.title='UtilityHub v10.4 — Operations & Monthly Workflow';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(installV103,30),{once:true});else setTimeout(installV103,30);
+  window.addEventListener('pageshow',()=>setTimeout(()=>{ensureStructureV103();renderOperationsV103();document.title='UtilityHub v10.4 — Operations & Monthly Workflow'},300));
+})();
+</script>
+
+<style id="utilityhub-v10-6-professional-ui-style">
+/* v10.6 — final professional UI and interaction stability layer */
+:root{--ui-font:Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ui-radius-sm:12px;--ui-radius-md:17px;--ui-radius-lg:23px;--ui-focus:0 0 0 3px rgba(11,116,229,.20)}
+html,body,button,input,select,textarea{font-family:var(--ui-font)!important}html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}body{letter-spacing:0}button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:not(:disabled){pointer-events:auto!important;cursor:pointer!important}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:0!important;box-shadow:var(--ui-focus)!important}button:disabled{cursor:not-allowed!important;opacity:.55!important}
+.svgIcon{display:block!important;visibility:visible!important;opacity:1!important;color:currentColor!important;overflow:visible}.iconbtn .svgIcon,.iconAction .svgIcon,.historyIconBtnV45 .svgIcon,.sheetCloseV50 .svgIcon,.propertyManageBtnV100 .svgIcon{width:21px!important;height:21px!important;min-width:21px!important;min-height:21px!important;color:currentColor!important}.iconbtn,.iconAction,.historyIconBtnV45,.sheetCloseV50,.propertyManageBtnV100{min-width:44px;min-height:44px}
+.card,.operationsPanelV103,.insightsPanelV96{border-color:var(--stroke,var(--line))!important}.row,.operationItemV103,.insightActionV96{transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}.row:hover,.operationItemV103:hover,.insightActionV96:hover{border-color:rgba(var(--accent-rgb),.32)!important;box-shadow:0 10px 24px rgba(15,23,42,.08)!important}.miniBtn,.btn,.operationActionV103,.insightsToolBtnV96,.workflowCardV103 button,.workflowReadingV103 button{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn{min-height:47px}
+.addMenuV75{font-family:var(--ui-font)!important;border:1px solid var(--stroke,var(--line))!important;background:var(--surface,var(--card))!important;box-shadow:0 24px 60px rgba(15,23,42,.22)!important;overflow:hidden!important;pointer-events:none!important}.addMenuV75.show{pointer-events:auto!important}.addMenuV75 button{width:100%!important;min-height:67px!important;display:grid!important;grid-template-columns:44px minmax(0,1fr)!important;gap:12px!important;align-items:center!important;padding:11px 12px!important;border-radius:15px!important;background:transparent!important;color:var(--ink,var(--text))!important;text-align:left!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}.addMenuV75 button:hover,.addMenuV75 button:focus-visible{background:var(--soft)!important}.addMenuV75 button+button{border-top:1px solid var(--stroke,var(--line))!important}.addMenuIconV75{width:42px!important;height:42px!important;min-width:42px!important;border-radius:13px!important;display:grid!important;place-items:center!important;background:#eaf4ff!important;color:#0b74e5!important;border:1px solid #cfe5ff!important;visibility:visible!important;opacity:1!important}.addMenuIconV75 .svgIcon{width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;color:#0b74e5!important;visibility:visible!important;opacity:1!important}.addMenuCopyV75{display:block!important;min-width:0!important;visibility:visible!important;opacity:1!important}.addMenuCopyV75 b{display:block!important;color:var(--ink,var(--text))!important;font-family:var(--ui-font)!important;font-size:13px!important;font-weight:900!important;line-height:1.22!important;letter-spacing:-.08px!important;visibility:visible!important;opacity:1!important}.addMenuCopyV75 small{display:block!important;margin-top:3px!important;color:var(--muted)!important;font-family:var(--ui-font)!important;font-size:10px!important;font-weight:700!important;line-height:1.32!important;visibility:visible!important;opacity:1!important}
+.bottom.addMenuOpenV75{z-index:80!important}.bottom .navAddV6 .navTextV6,.bottom.addMenuOpenV75 .navAddV6 .navTextV6{font-family:var(--ui-font)!important;visibility:visible!important;opacity:1!important}.bottom.addMenuOpenV75 .navAddV6 .svgIcon{background:linear-gradient(135deg,#0758b4,#032d62)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 10px 22px rgba(3,45,98,.28)!important}.bottom.addMenuOpenV75 .navAddV6 .svgIcon *{stroke:currentColor!important}.addMenuBackdropV75{pointer-events:none!important}.addMenuBackdropV75.show{z-index:68!important;pointer-events:auto!important;background:rgba(15,23,42,.16)!important;backdrop-filter:blur(2px)!important;-webkit-backdrop-filter:blur(2px)!important}
+body.dark .addMenuV75{background:#0d2137!important;border-color:#294765!important;box-shadow:0 28px 68px rgba(0,0,0,.48)!important}body.dark .addMenuV75 button{color:#f6fbff!important}body.dark .addMenuV75 button:hover,body.dark .addMenuV75 button:focus-visible{background:#102f4d!important}body.dark .addMenuV75 button+button{border-color:#294765!important}body.dark .addMenuIconV75{background:#0b3b66!important;border-color:#245f91!important;color:#9bd5ff!important}body.dark .addMenuIconV75 .svgIcon{color:#9bd5ff!important}body.dark .addMenuCopyV75 b{color:#f6fbff!important}body.dark .addMenuCopyV75 small{color:#a9bdd0!important}
+@media(min-width:900px){
+  body{padding-left:256px!important}.app{max-width:1220px!important;padding:28px 30px 54px!important}.bottom{left:16px!important;top:16px!important;bottom:16px!important;width:224px!important;padding:14px!important;border-radius:25px!important}.desktopNavBrandV103{padding:12px 11px 16px!important}.navPillV75 .nav{min-height:49px!important;border-radius:14px!important}.bottom .navAddV6{width:100%!important;min-width:100%!important;max-width:100%!important;height:54px!important;min-height:54px!important;max-height:54px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:11px!important;padding:8px 10px!important;border-radius:15px!important;background:var(--soft)!important;overflow:hidden!important}.bottom .navAddV6 .svgIcon{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;max-width:36px!important;max-height:36px!important;flex:0 0 36px!important;padding:8px!important;border-radius:11px!important}.bottom .navAddV6 .navTextV6,.bottom.addMenuOpenV75 .navAddV6 .navTextV6{display:block!important;flex:1 1 auto!important;width:auto!important;max-width:none!important;margin:0!important;color:var(--green)!important;font-size:12px!important;font-weight:900!important;line-height:1.2!important;text-align:left!important;white-space:nowrap!important;overflow:visible!important}.addMenuV75{left:calc(100% + 14px)!important;right:auto!important;bottom:0!important;width:330px!important;max-width:calc(100vw - 280px)!important;max-height:calc(100vh - 32px)!important;padding:9px!important;border-radius:22px!important;overflow:auto!important;transform-origin:bottom left!important}.addMenuV75.show{transform:translateX(0) scale(1)!important}
+}
+@media(max-width:899px){.bottom .navAddV6 .navTextV6{display:none!important}.addMenuV75{max-height:min(520px,calc(100dvh - 118px))!important;overflow:auto!important}.addMenuV75 button{min-height:62px!important}}
+@media(max-width:520px){.addMenuV75{width:min(330px,calc(100vw - 20px))!important}.addMenuCopyV75 b{font-size:12px!important}.addMenuCopyV75 small{font-size:9px!important}}
+</style>
+
+<script id="utilityhub-v10-6-professional-ui-script">
+(function(){
+  'use strict';
+  const VERSION_V106='v10.6';
+  let installedV106=false,normalizeQueuedV106=false;
+  function repairIconV106(node){if(!node||node.nodeType!==1)return;const spans=[];if(node.matches?.('span.svgIcon[data-icon]'))spans.push(node);node.querySelectorAll?.('span.svgIcon[data-icon]').forEach(icon=>spans.push(icon));spans.forEach(icon=>{if(icon.childElementCount||String(icon.textContent||'').trim())return;const name=icon.dataset.icon;if(name&&typeof svgIcon==='function')icon.outerHTML=svgIcon(name)})}
+  function normalizeButtonsV106(root){root=root||document;const buttons=[];if(root.matches?.('button'))buttons.push(root);root.querySelectorAll?.('button').forEach(button=>buttons.push(button));buttons.forEach(button=>{if(!button.getAttribute('type'))button.setAttribute('type','button');if(button.classList.contains('iconbtn')&&!button.getAttribute('aria-label'))button.setAttribute('aria-label',button.getAttribute('title')||'Action');button.removeAttribute('inert')})}
+  function stabilizeNavigationV106(){const dock=document.querySelector('nav.bottom'),add=dock?.querySelector('.navAddV6'),menu=document.getElementById('addMenuV75'),backdrop=document.getElementById('addMenuBackdropV75');if(!dock||!add)return;const open=!!menu?.classList.contains('show');dock.classList.toggle('addMenuOpenV75',open);backdrop?.classList.toggle('show',open);if(menu){menu.setAttribute('aria-hidden',open?'false':'true');menu.style.setProperty('pointer-events',open?'auto':'none','important');menu.querySelectorAll('button').forEach(button=>{button.type='button';button.tabIndex=open?0:-1;button.disabled=false;button.style.setProperty('pointer-events','auto','important');button.style.removeProperty('display');button.style.removeProperty('visibility');button.style.removeProperty('opacity');repairIconV106(button)})}if(backdrop)backdrop.style.setProperty('pointer-events',open?'auto':'none','important');let label=add.querySelector('.navTextV6');if(!label){label=document.createElement('span');label.className='navTextV6';add.appendChild(label)}const desktop=typeof matchMedia==='function'?matchMedia('(min-width:900px)').matches:(window.innerWidth||0)>=900;label.textContent=open?'Close menu':'Add / Manage';label.style.setProperty('display',desktop?'block':'none','important');label.style.setProperty('visibility',desktop?'visible':'hidden','important');label.style.setProperty('opacity',desktop?'1':'0','important');add.setAttribute('aria-label',open?'Close Add or Manage menu':'Open Add or Manage menu');add.setAttribute('aria-expanded',open?'true':'false');repairIconV106(add)}
+  window.stabilizeNavigationV106=stabilizeNavigationV106;
+  function normalizeUiV106(root){repairIconV106(root||document.documentElement);normalizeButtonsV106(root||document);stabilizeNavigationV106()}
+  function queueNormalizeV106(root){if(normalizeQueuedV106)return;normalizeQueuedV106=true;requestAnimationFrame(()=>{normalizeQueuedV106=false;normalizeUiV106(root||document)})}
+  function installV106(){if(installedV106||typeof db==='undefined'||!db){setTimeout(installV106,90);return}installedV106=true;
+    const previousToggle=window.toggleAddMenuV75;if(typeof previousToggle==='function')window.toggleAddMenuV75=function(){const result=previousToggle.apply(this,arguments);setTimeout(()=>normalizeUiV106(document.getElementById('addMenuV75')||document),0);return result};
+    const previousRender=window.render;if(typeof previousRender==='function')window.render=function(){const result=previousRender.apply(this,arguments);queueNormalizeV106(document);return result};
+    const previousOpenSheet=window.openSheet;if(typeof previousOpenSheet==='function')window.openSheet=function(){const result=previousOpenSheet.apply(this,arguments);queueNormalizeV106(document.getElementById('sheet')||document);return result};
+    if(typeof MutationObserver==='function'){const observer=new MutationObserver(records=>{const added=records.some(record=>record.addedNodes?.length);if(added)queueNormalizeV106(document)});observer.observe(document.body,{childList:true,subtree:true})}
+    window.addEventListener('resize',()=>queueNormalizeV106(document));db.settings.appVersion=VERSION_V106;if(typeof save==='function')save();normalizeUiV106(document);document.title='UtilityHub v10.6 — Professional Interface';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(installV106,70),{once:true});else setTimeout(installV106,70);
+  window.addEventListener('pageshow',()=>setTimeout(()=>{if(!installedV106)installV106();else{normalizeUiV106(document);document.title='UtilityHub v10.6 — Professional Interface'}},430));
+})();
+</script>
+
+<style id="utilityhub-v10-7-menu-controller-style">
+/* v10.7 — root-level menu portal; no transformed-parent stacking conflicts */
+body>.addMenuV75{position:fixed!important;z-index:1002!important;margin:0!important;pointer-events:none!important;isolation:isolate!important}
+body>.addMenuV75.show{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+body>.addMenuV75.show button,body>.addMenuV75.show [role="menuitem"]{pointer-events:auto!important;touch-action:manipulation!important}
+body>.addMenuBackdropV75{position:fixed!important;inset:0!important;z-index:1000!important;display:none!important;pointer-events:none!important}
+body>.addMenuBackdropV75.show{display:block!important;pointer-events:auto!important}
+nav.bottom.addMenuOpenV75{z-index:1001!important}
+</style>
+
+<script id="utilityhub-v10-7-menu-controller-script">
+(function(){
+  'use strict';
+  const VERSION_V107='v10.7';
+  let installedV107=false;
+  function menuPartsV107(){return {dock:document.querySelector('nav.bottom'),menu:document.getElementById('addMenuV75'),backdrop:document.getElementById('addMenuBackdropV75')}}
+  function portalMenuV107(){const parts=menuPartsV107();if(parts.menu&&parts.menu.parentElement!==document.body)document.body.appendChild(parts.menu);if(parts.backdrop&&parts.backdrop.parentElement!==document.body)document.body.insertBefore(parts.backdrop,parts.menu||null);return menuPartsV107()}
+  function positionMenuV107(){const {dock,menu}=portalMenuV107();if(!menu)return;const width=Math.min(330,Math.max(260,(window.innerWidth||360)-20)),desktop=typeof matchMedia==='function'?matchMedia('(min-width:900px)').matches:(window.innerWidth||0)>=900,rect=dock?.getBoundingClientRect?.()||{right:240,bottom:(window.innerHeight||720)-16};let left;if(desktop)left=Math.min(rect.right+14,(window.innerWidth||1280)-width-12);else left=Math.max(10,((window.innerWidth||360)-width)/2);menu.style.setProperty('position','fixed','important');menu.style.setProperty('width',width+'px','important');menu.style.setProperty('max-width','calc(100vw - 20px)','important');menu.style.setProperty('left',Math.max(10,left)+'px','important');menu.style.setProperty('right','auto','important');menu.style.setProperty('top','auto','important');menu.style.setProperty('bottom',(desktop?Math.max(12,(window.innerHeight||720)-rect.bottom):Math.max(94,12))+'px','important')}
+  function bindMenuActionsV107(menu){if(!menu||menu.dataset.v107Actions==='1')return;menu.dataset.v107Actions='1';menu.querySelectorAll('button').forEach(button=>{const source=String(button.getAttribute('onclick')||''),workflow=button.hasAttribute('data-workflow-v103'),action=workflow?'workflow':source.includes("'bill'")?'bill':source.includes("'reading'")?'reading':source.includes("'payment'")?'payment':source.includes("'unit'")?'unit':'';if(!action)return;button.removeAttribute('onclick');button.type='button';button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();window.toggleAddMenuV75(false);if(action==='workflow'){if(typeof openMonthlyWorkflowV103==='function')openMonthlyWorkflowV103();return}setTimeout(()=>{if(action==='bill'&&typeof formBill==='function')formBill();else if(action==='reading'&&typeof formReading==='function')formReading();else if(action==='payment'&&typeof pickPayment==='function')pickPayment();else if(action==='unit'&&typeof formOccupant==='function')formOccupant()},80)})})}
+  function setMenuStateV107(open){const {dock,menu,backdrop}=portalMenuV107(),add=dock?.querySelector('.navAddV6');if(!dock||!menu||!backdrop||!add)return false;if(open)positionMenuV107();menu.classList.toggle('show',open);backdrop.classList.toggle('show',open);dock.classList.toggle('addMenuOpenV75',open);menu.setAttribute('aria-hidden',open?'false':'true');menu.style.setProperty('pointer-events',open?'auto':'none','important');backdrop.style.setProperty('pointer-events',open?'auto':'none','important');add.setAttribute('aria-expanded',open?'true':'false');const label=add.querySelector('.navTextV6'),desktop=typeof matchMedia==='function'?matchMedia('(min-width:900px)').matches:(window.innerWidth||0)>=900;if(label){label.textContent=open?'Close menu':'Add / Manage';label.style.setProperty('display',desktop?'block':'none','important');label.style.setProperty('visibility',desktop?'visible':'hidden','important');label.style.setProperty('opacity',desktop?'1':'0','important')}const icon=add.querySelector('.svgIcon');if(icon&&typeof svgIcon==='function')icon.outerHTML=open?svgIcon('close'):svgIcon('plus');menu.querySelectorAll('button').forEach(button=>{button.disabled=false;button.tabIndex=open?0:-1;button.style.setProperty('pointer-events',open?'auto':'none','important')});return open}
+  window.setMenuStateV107=setMenuStateV107;
+  function installV107(){if(installedV107||typeof db==='undefined'||!db){setTimeout(installV107,90);return}const parts=portalMenuV107();if(!parts.menu||!parts.backdrop||!parts.dock){setTimeout(installV107,90);return}installedV107=true;bindMenuActionsV107(parts.menu);window.toggleAddMenuV75=function(force){const menu=document.getElementById('addMenuV75'),open=typeof force==='boolean'?force:!menu?.classList.contains('show');return setMenuStateV107(open)};parts.backdrop.onclick=()=>setMenuStateV107(false);window.addEventListener('resize',()=>{if(document.getElementById('addMenuV75')?.classList.contains('show'))positionMenuV107()});document.addEventListener('keydown',event=>{if(event.key==='Escape')setMenuStateV107(false)});setMenuStateV107(false);db.settings.appVersion=VERSION_V107;if(typeof save==='function')save();document.title='UtilityHub v10.7 — Stable Add Menu';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(installV107,100),{once:true});else setTimeout(installV107,100);
+  window.addEventListener('pageshow',()=>setTimeout(()=>{if(!installedV107)installV107();else{portalMenuV107();bindMenuActionsV107(document.getElementById('addMenuV75'));setMenuStateV107(false);document.title='UtilityHub v10.7 — Stable Add Menu'}},500));
 })();
 </script>
 
